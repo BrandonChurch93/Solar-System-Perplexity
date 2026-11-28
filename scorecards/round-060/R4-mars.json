@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 2683-2687, whole frame and especially the right third and the foreground",
+   "what": "the cover from the terrain hold into the rise plays as a dissolve between two different terrain plates, not one camera move. A dark cliff wedge fades in at the right, a second haze band doubles the horizon, the foreground mesa goes see-through, and the near ground swims as the two pictures overlap",
+   "fix": "take the start of the rise from the same terrain camera and geometry as the end of the hold, so one continuous pull-up replaces the cross-dissolve. If a blend can't be avoided, keep it under about 4 frames and match the horizon line and ridge positions in both plates"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 2471-2474, right edge and lower-left foreground",
+   "what": "the cover from the dive into the terrain shows a ghost copy of a ridge line (a thin dark arc in the upper right) left over from the previous plate. A dark vertical band, the edge of the plate, sits at the right edge of the frame, and the foreground ground is stretched into streaks",
+   "fix": "match the dive's last frame to the terrain's first frame in geometry, not with a dissolve. Overscan the terrain plate or crop in so its edge never enters the frame, and give the near ground more texture resolution so it doesn't smear"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2683-2697",
+   "what": "there is a jump in the rise. In 14 frames the view snaps from the dark, warm, low-sun mesa to a bright, saturated red plain with a blue horizon and a different horizon tilt. Exposure, color and horizon angle all break, so it doesn't read as the same place seen from higher up",
+   "fix": "ease the exposure and grade across the climb, and keep the horizon roll continuous. Insert altitude frames so the terrain view opens out into the orbital view instead of cutting to it"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2424-2457, the surface texture during the dive",
+   "what": "the planet's surface is a flat texture being zoomed, so it goes soft and stretches into radial streaks (lower half of 2449, and 2440) instead of resolving into detail with depth. The canyon also swings direction sharply between 2432, 2440, 2449 and 2457, which reads as a whip rather than a camera with mass",
+   "fix": "stream in higher-resolution or displaced terrain as the altitude drops, so detail grows with no smear, and spread the yaw over more frames with ease-in and ease-out"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2400-2416, the moon in the lower right",
+   "what": "the moon covers about half the frame width in 8 frames and grows sharply. Then from 2408 to 2416 the planet jumps in scale. The start of the dive has no ease-in, so the camera seems to lurch off the hold",
+   "fix": "ramp the dive's speed up from the hold's drift with an ease-in curve over about 15 to 20 frames, and let the moon pass on a smooth arc"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 2490-2669, foreground mesa against the far rim",
+   "what": "the terrain hold moves very little and the near cliff and far horizon shift almost together, so the view reads as a slow pan across a still matte, with weak parallax and depth. The valley dust is the only life",
+   "fix": "move the camera itself (a slow truck or crane) so the near mesa clearly slides against the far rim, and add slow dust or haze drifting through the canyon"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 2724-2744, the right limb (polar cap)",
+   "what": "the polar cap clips to a hot white blob as the planet pulls away, and the moon seen in the hold is gone from the departure",
+   "fix": "roll off the highlights on the ice cap, and keep the moon in frame or let it exit on a visible path so the return matches the arrival"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 2250-2399, the moon in front of the lower disc",
+   "what": "the moon's position wanders a little left and right between samples instead of following one steady orbital path, which reads as faint jitter",
+   "fix": "drive the moon on a single smooth orbit curve, locked to the hold camera"
+  }
+ ]
+}

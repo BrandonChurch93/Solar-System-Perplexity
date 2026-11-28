@@ -1,15 +1,15 @@
 {
- "engineHash": "247ebad7e038ce06",
+ "engineHash": "a455bc02904b0d42",
  "stopHashes": {
-  "sun": "078d8530e996c8b2",
-  "mercury": "3264078c6b99b4d5",
-  "venus": "54d2208ee58b3ad9",
-  "earth": "2b75dbd9c40c8387",
-  "mars": "2e6bd53c2517a02a",
-  "jupiter": "e92e46df4195fb6b",
-  "saturn": "47a787cd7f78408c",
-  "uranus": "a5dd9ab65ef9c8db",
-  "neptune": "091f37a616e0d16e"
+  "sun": "798d86899a23100c",
+  "mercury": "fcf448109bb38c8c",
+  "venus": "c3eba160eb23e536",
+  "earth": "065c92c05fff6050",
+  "mars": "8199038c43414b93",
+  "jupiter": "5c350312424ada50",
+  "saturn": "c901fffb177a3ead",
+  "uranus": "dcdc44002e7b1623",
+  "neptune": "16df4e3c5c92ccde"
  },
  "format": "16x9",
  "tier": "final",
@@ -28,7 +28,7 @@
   "joinedWithoutEncoding": true,
   "proof": "every decoded frame of the post has the hash of the same frame of the intro or the clip, and every frame time is kept",
   "pictureParameterSets": "differ, each travels in its own part of the stream as between the parts of a clip",
-  "sha256": "f4b42faeb7ec64547b3f648a0d4dca7e77bce905354488036eeb6758e3ce64ee",
+  "sha256": "c06268de7b0c40c8d864976809df70768ec9ac2e243eb495e3fa63bb029ebaae",
   "cutSeconds": 4.7667,
   "durationSeconds": 21.2667,
   "intro": {
@@ -41,7 +41,7 @@
   },
   "clip": {
    "file": "out/work/clips/neptune.mp4",
-   "sha256": "b50ee0dc85a55b37b01b90e57d7a9dad4082b080c8b31a5fe40b49d0c9fdcbf2",
+   "sha256": "3b465733715d3106b47113f99e352ab861e70366143907d4b85eddff61dbd622",
    "first": 4530,
    "last": 5024
   },
@@ -57,8 +57,8 @@
    "colorRange": "tv",
    "durationSeconds": 21.266667
   },
-  "seconds": 32.43,
-  "date": "2026-11-23T05:50:29.452Z",
-  "signature": "[\"f4b42faeb7ec64547b3f648a0d4dca7e77bce905354488036eeb6758e3ce64ee\",\"copy\"]"
+  "seconds": 23.262,
+  "date": "2026-11-27T15:42:08.431Z",
+  "signature": "[\"c06268de7b0c40c8d864976809df70768ec9ac2e243eb495e3fa63bb029ebaae\",\"copy\"]"
  }
 }

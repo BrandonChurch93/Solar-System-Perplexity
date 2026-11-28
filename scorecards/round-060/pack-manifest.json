@@ -1,0 +1,650 @@
+{
+ "R1-earth": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-jupiter": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-mars": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-mercury": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-neptune": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-saturn": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-sun": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-uranus": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R1-venus": {
+  "files": [
+   "pair-01-a.png",
+   "pair-01-b.png",
+   "pair-02-a.png",
+   "pair-02-b.png",
+   "pair-03-a.png",
+   "pair-03-b.png",
+   "pair-04-a.png",
+   "pair-04-b.png"
+  ]
+ },
+ "R2-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png",
+   "image-09.png"
+  ]
+ },
+ "R2-part2": {
+  "files": [
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png",
+   "image-17.png",
+   "image-18.png"
+  ]
+ },
+ "R2-part3": {
+  "files": [
+   "image-19.png",
+   "image-20.png",
+   "image-21.png",
+   "image-22.png",
+   "image-23.png",
+   "image-24.png",
+   "image-25.png",
+   "image-26.png",
+   "image-27.png"
+  ]
+ },
+ "R2-part4": {
+  "files": [
+   "image-28.png",
+   "image-29.png",
+   "image-30.png",
+   "image-31.png",
+   "image-32.png",
+   "image-33.png",
+   "image-34.png",
+   "image-35.png",
+   "image-36.png"
+  ]
+ },
+ "R2-part5": {
+  "files": [
+   "image-37.png",
+   "image-38.png",
+   "image-39.png",
+   "image-40.png",
+   "image-41.png",
+   "image-42.png",
+   "image-43.png",
+   "image-44.png",
+   "image-45.png"
+  ]
+ },
+ "R3-earth-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-earth-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-jupiter-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-jupiter-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-mars-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-mars-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-mercury-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-mercury-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-neptune-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-neptune-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-part3": {
+  "files": [
+   "image-17.png",
+   "image-18.png",
+   "image-19.png",
+   "image-20.png",
+   "image-21.png",
+   "image-22.png",
+   "image-23.png",
+   "image-24.png"
+  ]
+ },
+ "R3-part4": {
+  "files": [
+   "image-25.png",
+   "image-26.png",
+   "image-27.png",
+   "image-28.png",
+   "image-29.png",
+   "image-30.png",
+   "image-31.png",
+   "image-32.png"
+  ]
+ },
+ "R3-part5": {
+  "files": [
+   "image-33.png",
+   "image-34.png",
+   "image-35.png",
+   "image-36.png",
+   "image-37.png",
+   "image-38.png",
+   "image-39.png",
+   "image-40.png"
+  ]
+ },
+ "R3-saturn-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-saturn-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-sun-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-sun-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-sun-part3": {
+  "files": [
+   "image-17.png",
+   "image-18.png",
+   "image-19.png",
+   "image-20.png"
+  ]
+ },
+ "R3-uranus-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-uranus-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R3-venus-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R3-venus-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R4-earth": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-jupiter": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-mars": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-mercury": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-neptune": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-part1": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png",
+   "sheet-07.png",
+   "sheet-08.png",
+   "sheet-09.png"
+  ]
+ },
+ "R4-part2": {
+  "files": [
+   "sheet-10.png",
+   "sheet-11.png"
+  ]
+ },
+ "R4-saturn": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-sun": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png"
+  ]
+ },
+ "R4-uranus": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R4-venus": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png",
+   "sheet-06.png"
+  ]
+ },
+ "R5": {
+  "files": [
+   "sheet-01.png",
+   "sheet-02.png",
+   "sheet-03.png",
+   "sheet-04.png",
+   "sheet-05.png"
+  ]
+ },
+ "R6": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png",
+   "image-09.png"
+  ]
+ },
+ "R7-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png"
+  ]
+ },
+ "R7-part2": {
+  "files": [
+   "image-09.png",
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png"
+  ]
+ },
+ "R7-part3": {
+  "files": [
+   "image-17.png",
+   "image-18.png",
+   "image-19.png",
+   "image-20.png",
+   "image-21.png",
+   "image-22.png",
+   "image-23.png",
+   "image-24.png"
+  ]
+ },
+ "R8-part1": {
+  "files": [
+   "image-01.png",
+   "image-02.png",
+   "image-03.png",
+   "image-04.png",
+   "image-05.png",
+   "image-06.png",
+   "image-07.png",
+   "image-08.png",
+   "image-09.png"
+  ]
+ },
+ "R8-part2": {
+  "files": [
+   "image-10.png",
+   "image-11.png",
+   "image-12.png",
+   "image-13.png",
+   "image-14.png",
+   "image-15.png",
+   "image-16.png",
+   "image-17.png",
+   "image-18.png"
+  ]
+ }
+}

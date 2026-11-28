@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solar System Fly-Through</title>
+<meta name="description" content="One flight past nine worlds, from the surface of the Sun to the edge of the system. A three minute film, drawn frame by frame in code.">
+<meta property="og:title" content="Solar System Fly-Through">
+<meta property="og:description" content="One flight past nine worlds. A three minute film, drawn frame by frame in code.">
+<meta property="og:image" content="assets/stills/poster.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2303040a'/%3E%3Cellipse cx='32' cy='32' rx='28' ry='8' fill='none' stroke='%237c3aed' stroke-width='3' transform='rotate(-18 32 32)'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/font/lato-medium.woff" as="font" type="font/woff" crossorigin>
+<style>
+@font-face { font-family: 'Lato Film'; src: url('assets/font/lato-medium.woff') format('woff'); font-weight: 500; font-style: normal; font-display: swap; }
+:root { --ink: #fff; --dim: rgba(255,255,255,.70); --faint: rgba(255,255,255,.42); --night: #03040a; --rule: rgba(255,255,255,.13); --violet: #7c3aed; --w: min(1180px, 92vw); }
+* { box-sizing: border-box; }
+html { background: var(--night); color-scheme: dark; }
+body { margin: 0; font-family: 'Lato Film', Lato, 'Helvetica Neue', Arial, sans-serif; font-weight: 500; color: var(--ink); line-height: 1.55; font-size: 17px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  background: radial-gradient(90% 55% at 78% 8%, rgba(70,58,150,.20), transparent 62%), radial-gradient(70% 50% at 8% 46%, rgba(40,52,120,.14), transparent 60%), radial-gradient(80% 45% at 60% 96%, rgba(96,40,150,.16), transparent 62%), var(--night); background-attachment: fixed; }
+#sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.wrap { width: var(--w); margin: 0 auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1, h2, h3, p { margin: 0; font-weight: 500; }
+a { color: inherit; }
+
+/* The film's subtitle look: white words that come in one by one, on a haze of blue, violet and magenta. No box. */
+.say { position: relative; display: block; isolation: isolate; }
+.say .hz, .say .tx { display: block; }
+.say .hz { position: absolute; inset: 0; z-index: -1; color: transparent; user-select: none; pointer-events: none; }
+.say .h { position: relative; display: inline-block; }
+.say .h::before { content: ''; position: absolute; left: -.46em; right: -.46em; top: -.26em; bottom: -.26em; border-radius: 50%;
+  background: radial-gradient(closest-side, hsla(var(--h), 88%, 60%, .62), hsla(var(--h), 88%, 56%, .30) 55%, hsla(var(--h), 88%, 50%, 0));
+  filter: blur(.30em); opacity: 0; transition: opacity .36s ease-out; transition-delay: calc(var(--i) * var(--pace, 95ms)); }
+.say .w { display: inline-block; opacity: 0; transform: translateY(.10em); filter: blur(.07em);
+  transition: opacity .22s ease-out, transform .22s ease-out, filter .22s ease-out; transition-delay: calc(var(--i) * var(--pace, 95ms) + 240ms); }
+.say.on .h::before { opacity: 1; animation: drift 9s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -700ms); }
+.say.on .w { opacity: 1; transform: none; filter: none; }
+.say.plain .h::before { display: none; }
+@keyframes drift { from { transform: translateX(-.14em) scale(1); filter: blur(.30em) hue-rotate(-14deg); } to { transform: translateX(.14em) scale(1.06); filter: blur(.34em) hue-rotate(16deg); } }
+
+.top { padding: clamp(34px, 6.5vh, 84px) 0 clamp(22px, 3.6vh, 40px); text-align: center; }
+.eyebrow { font-size: 13px; letter-spacing: .34em; text-transform: uppercase; color: var(--faint); margin-bottom: 18px; }
+h1 { font-size: clamp(34px, min(7.2vw, 9.5vh), 92px); line-height: 1.04; letter-spacing: -.012em; text-wrap: balance; }
+.lede { margin-top: 16px; font-size: clamp(18px, 2.3vw, 27px); color: var(--ink); text-wrap: balance; }
+
+.film { padding-bottom: clamp(60px, 10vh, 120px); scroll-margin-top: 18px; }
+.frame { position: relative; width: min(100%, max(560px, calc((100vh - 290px) * 1.7778))); margin: 0 auto; aspect-ratio: 16 / 9; background: #000; overflow: hidden; border-radius: 4px; box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 40px 160px -30px rgba(124,58,237,.42); }
+.frame video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: #000; }
+.start { position: absolute; inset: 0; width: 100%; border: 0; padding: 0 0 7% 0; cursor: pointer; color: var(--ink); font: inherit; display: flex; align-items: flex-end; justify-content: center;
+  background: linear-gradient(to top, rgba(3,4,10,.62), rgba(3,4,10,0) 46%); }
+.start .say { font-size: clamp(18px, 3.2vw, 40px); }
+.start:hover .say .h::before, .start:focus-visible .say .h::before { filter: blur(.30em) brightness(1.35); }
+.start:focus-visible, .line button:focus-visible, .go:focus-visible, .sw button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 4px; }
+.start[hidden] { display: none; }
+.fail { margin-top: 14px; color: var(--dim); text-align: center; }
+.fail[hidden] { display: none; }
+
+/* The flight line: nine stops, placed where they fall in the film's three minutes. */
+.line { position: relative; margin-top: 30px; height: 58px; }
+.line .track { position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--rule); }
+.line .fill { position: absolute; left: 0; top: 6px; height: 3px; width: 0; border-radius: 3px; background: linear-gradient(90deg, #4f5dff, #8b46f0 55%, #c63fd8); box-shadow: 0 0 18px rgba(139,70,240,.85); }
+.line ol { list-style: none; margin: 0; padding: 0; }
+.line li { position: absolute; top: 0; }
+.line button { position: relative; display: block; border: 0; background: none; color: var(--faint); font: inherit; font-size: 13px; letter-spacing: .04em; padding: 24px 0 6px; cursor: pointer; transform: translateX(-7px); text-align: left; transition: color .25s; white-space: nowrap; }
+.line li:last-child button { transform: translateX(calc(-100% + 8px)); text-align: right; }
+.line button::before { content: ''; position: absolute; left: 3px; top: 3px; width: 9px; height: 9px; border-radius: 50%; background: var(--night); border: 1px solid rgba(255,255,255,.5); transition: background .25s, box-shadow .25s, border-color .25s; }
+.line li:last-child button::before { left: auto; right: 4px; }
+.line button:hover { color: var(--ink); }
+.line li.past button::before { background: #fff; border-color: #fff; }
+.line li.now button { color: var(--ink); }
+.line li.now button::before { background: #fff; border-color: #fff; box-shadow: 0 0 0 5px rgba(139,70,240,.38), 0 0 22px 4px rgba(139,70,240,.9); }
+.note { margin-top: 18px; color: var(--faint); font-size: 15px; text-align: center; }
+
+section { padding: clamp(50px, 9vh, 110px) 0; }
+h2 { font-size: clamp(30px, 4.6vw, 58px); line-height: 1.08; letter-spacing: -.01em; text-wrap: balance; }
+.intro { margin-top: 22px; max-width: 34em; color: var(--dim); font-size: clamp(17px, 1.5vw, 20px); }
+
+.stop { padding-top: clamp(54px, 9vh, 100px); scroll-margin-top: 10px; }
+.stop header { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
+.stop .n { font-size: 13px; letter-spacing: .3em; color: var(--faint); font-variant-numeric: tabular-nums; }
+.stop h3 { font-size: clamp(28px, 3.6vw, 46px); line-height: 1.1; flex: 1 1 auto; }
+.go { border: 0; background: none; color: var(--dim); font: inherit; font-size: 15px; cursor: pointer; padding: 6px 0; border-bottom: 1px solid var(--rule); transition: color .2s, border-color .2s; }
+.go:hover { color: var(--ink); border-color: #8b46f0; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 26px); }
+.shot { position: relative; }
+.shot .pic { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #000; border-radius: 3px; container-type: size; }
+.shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .55s ease; }
+.shot img.ref { opacity: 0; }
+.shot.picture img.ref { opacity: 1; }
+.shot.picture img.flm { opacity: 0; }
+.cap { position: absolute; left: 10%; right: 10%; bottom: 7%; text-align: center; font-size: clamp(13px, 1.55vw, 22px); font-size: max(12px, 5cqh); line-height: 1.32; --pace: 150ms; pointer-events: none; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.under { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 10px; color: var(--faint); font-size: 14px; }
+.sw { display: inline-flex; gap: 2px; }
+.sw button { border: 0; background: none; font: inherit; font-size: 14px; color: var(--faint); padding: 5px 12px; cursor: pointer; border-radius: 999px; transition: color .2s, background .3s, box-shadow .3s; }
+.sw button:hover { color: var(--ink); }
+.sw button[aria-pressed="true"] { color: var(--ink); background: radial-gradient(closest-side, rgba(139,70,240,.75), rgba(139,70,240,.18) 78%, rgba(139,70,240,0)); box-shadow: 0 0 26px rgba(139,70,240,.55); }
+
+.made .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px) clamp(24px, 3.4vw, 54px); margin-top: clamp(34px, 6vh, 64px); }
+.made h3 { font-size: 22px; line-height: 1.25; margin-bottom: 10px; }
+.made p { color: var(--dim); }
+.count { display: flex; flex-wrap: wrap; gap: 14px clamp(26px, 5vw, 70px); margin-top: clamp(40px, 7vh, 76px); padding-top: 30px; border-top: 1px solid var(--rule); }
+.count div { font-size: 14px; color: var(--faint); letter-spacing: .04em; }
+.count b { display: block; font-weight: 500; font-size: clamp(26px, 3.2vw, 40px); color: var(--ink); letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+
+.end { text-align: center; padding: clamp(80px, 16vh, 190px) 0 clamp(60px, 10vh, 110px); }
+.end .say { font-size: clamp(26px, 4.4vw, 56px); line-height: 1.16; text-wrap: balance; --pace: 150ms; }
+.credit { margin-top: clamp(60px, 11vh, 120px); color: var(--faint); font-size: 14px; }
+.credit p + p { margin-top: 6px; }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .pair { grid-template-columns: 1fr; }
+  .made .grid { grid-template-columns: 1fr; }
+  .line button { font-size: 0; padding-bottom: 0; }
+  .line li.now button { font-size: 13px; }
+  .line { height: 50px; }
+}
+@media (min-width: 761px) and (max-width: 1040px) { .made .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (prefers-reduced-motion: reduce) {
+  .say .w, .say .h::before { transition: none; }
+  .say.on .h::before { animation: none; }
+  .shot img { transition: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="top wrap">
+  <p class="eyebrow">A flight past nine worlds</p>
+  <h1 class="say">Solar System Fly-Through</h1>
+  <p class="lede say plain">It begins here. On the surface of a star.</p>
+</header>
+
+<main>
+<div class="film wrap" id="the-film">
+  <div class="frame">
+    <video id="film" playsinline preload="metadata" poster="assets/stills/poster.jpg"></video>
+    <button class="start" id="start" type="button" aria-label="Begin the flight. Plays the film with sound."><span class="say">Begin the flight</span></button>
+  </div>
+  <p class="fail" id="fail" hidden>The film did not load here. Give it a moment, then load the page again.</p>
+  <nav class="line" aria-label="The nine stops of the flight">
+    <div class="track"></div><div class="fill" id="fill"></div>
+    <ol id="dots"></ol>
+  </nav>
+  <p class="note">Three minutes. Sound on. The words come as they are spoken.</p>
+</div>
+
+<section class="stops wrap" aria-labelledby="worlds">
+  <h2 class="say" id="worlds">Nine worlds</h2>
+  <p class="intro">Each one is seen whole, then from just above its surface, then left behind. Every world was a picture first. Under each frame you can change between the film and the picture it was built from.</p>
+  <div id="stops"></div>
+</section>
+
+<section class="made wrap" aria-labelledby="made">
+  <h2 class="say" id="made">How it was made</h2>
+  <div class="grid">
+    <div><h3>Nothing here was filmed.</h3><p>Every frame is drawn by a program, in a web browser, one frame at a time. Three.js draws the worlds, their weather and their light. Then the frames are joined: <span data-f="frames">5,400</span> of them, <span data-f="fpsword">thirty</span> for each second.</p></div>
+    <div><h3>Each world was a picture first.</h3><p>Before any code, every world had two approved pictures: one of the whole world, one from just above its surface. The code was written to match them, and then it was flown.</p></div>
+    <div><h3>It is one flight.</h3><p>The camera never lands. It comes to a world, holds, dives to the surface, rises and leaves for the next. Nine times, from the Sun to Neptune. Then it keeps going, and looks back.</p></div>
+    <div><h3>The voice.</h3><p>Nineteen lines, spoken by a generated voice. Each word comes onto the screen at the moment it is spoken, on a haze of violet. There is no box around the words.</p></div>
+    <div><h3>The music.</h3><p>One piece of music, fitted to the length of the flight. The voice is laid over it.</p></div>
+    <div><h3>The same every time.</h3><p>The film is not a recording of a screen. The program can draw any frame again, exactly the same, at any size.</p></div>
+  </div>
+  <div class="count" aria-label="The film in numbers">
+    <div><b>3:00</b>minutes</div>
+    <div><b data-f="frames">5,400</b>frames</div>
+    <div><b data-f="fps">30</b>frames a second</div>
+    <div><b>1920 x 1080</b>pixels</div>
+    <div><b>9</b>worlds</div>
+    <div><b>19</b>spoken lines</div>
+  </div>
+</section>
+
+<footer class="end wrap">
+  <p class="say">This is our neighborhood. We have only just stepped outside.</p>
+  <div class="credit">
+    <p>Solar System Fly-Through. Made by Brandon Church with Perplexity Computer.</p>
+    <p>Type: Lato, under the SIL Open Font License.</p>
+  </div>
+</footer>
+</main>
+
+<script src="assets/vendor/hls.light.min.js"></script>
+<script>
+// The film in numbers. Change these when the film file changes; the page reads them everywhere.
+var FILM = { seconds: 180, frames: '5,400', fps: '30', fpsword: 'thirty' };
+// The nine stops: where each begins in the film (seconds) and the film's own words for it.
+var STOPS = [
+  { id: 'sun', name: 'The Sun', short: 'Sun', t: 0, first: 'surface', line: 'It begins here. On the surface of a star.' },
+  { id: 'mercury', name: 'Mercury', short: 'Mercury', t: 18, first: 'whole', line: 'Mercury. Small, and close. A year passes in eighty-eight days.' },
+  { id: 'venus', name: 'Venus', short: 'Venus', t: 37, first: 'whole', line: 'Venus. Almost the same size as Earth, and nothing like it.' },
+  { id: 'earth', name: 'Earth', short: 'Earth', t: 56, first: 'whole', line: 'And this one. The only place we know where water runs.' },
+  { id: 'mars', name: 'Mars', short: 'Mars', t: 75, first: 'whole', line: 'Mars. Quiet, and the color of rust.' },
+  { id: 'jupiter', name: 'Jupiter', short: 'Jupiter', t: 94, first: 'whole', line: 'Jupiter. A thousand Earths would fit inside it.' },
+  { id: 'saturn', name: 'Saturn', short: 'Saturn', t: 113, first: 'whole', line: 'Saturn. Its rings reach farther than the distance from Earth to the Moon.' },
+  { id: 'uranus', name: 'Uranus', short: 'Uranus', t: 132, first: 'whole', line: 'Uranus. Something knocked it over, a very long time ago.' },
+  { id: 'neptune', name: 'Neptune', short: 'Neptune', t: 151, first: 'whole', line: 'Neptune. The last one. A single year here takes a hundred and sixty-five of ours.' }
+];
+var VIEW = { whole: 'the whole world', surface: 'just above the surface' };
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var clock = function (t) { return Math.floor(t / 60) + ':' + ('0' + Math.floor(t % 60)).slice(-2); };
+
+document.querySelectorAll('[data-f]').forEach(function (e) { e.textContent = FILM[e.getAttribute('data-f')]; });
+
+// The stops, built from the list above.
+var holder = $('#stops');
+STOPS.forEach(function (s, k) {
+  var views = s.first === 'surface' ? ['surface', 'whole'] : ['whole', 'surface'];
+  var shots = views.map(function (v, j) {
+    var base = 'assets/stills/' + s.id + '-' + v;
+    return '<div class="shot"><div class="pic">' +
+      '<img class="flm" loading="lazy" decoding="async" width="1280" height="720" src="' + base + '-film.webp" alt="' + s.name + ', ' + VIEW[v] + ': a frame of the film">' +
+      '<img class="ref" loading="lazy" decoding="async" width="1280" height="720" src="' + base + '-picture.webp" alt="' + s.name + ', ' + VIEW[v] + ': the approved picture it was built from">' +
+      (j === 0 ? '<p class="cap say">' + s.line + '</p>' : '') + '</div>' +
+      '<div class="under"><span>' + (v === 'whole' ? 'The whole world' : 'Just above the surface') + '</span>' +
+      '<span class="sw" role="group" aria-label="Show the film or the picture"><button type="button" data-show="film" aria-pressed="true">Film</button><button type="button" data-show="picture" aria-pressed="false">Picture</button></span></div></div>';
+  }).join('');
+  var a = document.createElement('article');
+  a.className = 'stop'; a.id = s.id;
+  a.innerHTML = '<header><span class="n">' + ('0' + (k + 1)).slice(-2) + '</span><h3>' + s.name + '</h3>' +
+    '<button class="go" type="button" data-t="' + s.t + '">Fly there, ' + clock(s.t) + '</button></header><div class="pair">' + shots + '</div>';
+  holder.appendChild(a);
+});
+holder.addEventListener('click', function (e) {
+  var b = e.target.closest('.sw button');
+  if (b) {
+    var shot = b.closest('.shot'), pic = b.getAttribute('data-show') === 'picture';
+    shot.classList.toggle('picture', pic);
+    shot.querySelectorAll('.sw button').forEach(function (x) { x.setAttribute('aria-pressed', String((x.getAttribute('data-show') === 'picture') === pic)); });
+    return;
+  }
+  var g = e.target.closest('.go');
+  if (g) fly(Number(g.getAttribute('data-t')));
+});
+
+// Words that come in one by one, as the film's subtitles do.
+function say(el) {
+  var text = el.textContent.replace(/\s+/g, ' ').trim(), words = text.split(' ');
+  var sr = document.createElement('span'); sr.className = 'sr'; sr.textContent = text;
+  var hz = document.createElement('span'); hz.className = 'hz'; hz.setAttribute('aria-hidden', 'true');
+  var tx = document.createElement('span'); tx.className = 'tx'; tx.setAttribute('aria-hidden', 'true');
+  words.forEach(function (w, i) {
+    var hue = Math.round(236 + 62 * Math.sin(Math.PI * (words.length > 1 ? i / (words.length - 1) : .5)));
+    [[hz, 'h'], [tx, 'w']].forEach(function (p) {
+      var s = document.createElement('span'); s.className = p[1]; s.style.setProperty('--i', i); s.style.setProperty('--h', hue); s.textContent = w;
+      p[0].appendChild(s);
+      if (i < words.length - 1) p[0].appendChild(document.createTextNode(' '));
+    });
+  });
+  el.textContent = ''; el.appendChild(sr); el.appendChild(hz); el.appendChild(tx);
+}
+var said = document.querySelectorAll('.say');
+said.forEach(say);
+if ('IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function (list) {
+    list.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('on'); io.unobserve(x.target); } });
+  }, { threshold: .55 });
+  said.forEach(function (e) { io.observe(e); });
+} else { said.forEach(function (e) { e.classList.add('on'); }); }
+
+// The film and its flight line.
+var v = $('#film'), start = $('#start'), fill = $('#fill'), dots = $('#dots');
+STOPS.forEach(function (s) {
+  var li = document.createElement('li');
+  li.style.left = (s.t / FILM.seconds * 100) + '%';
+  li.innerHTML = '<button type="button" data-t="' + s.t + '" aria-label="Fly to ' + s.name + ', ' + clock(s.t) + '">' + s.short + '</button>';
+  dots.appendChild(li);
+});
+// The film is served in pieces of four seconds (media/film.m3u8 and its parts), not as one file.
+// The host does not answer requests for a part of a file, so one large file could only be played from its start
+// and could not be searched. Pieces need no such requests: any place in the film opens at once.
+// Nothing of the film is loaded before the visitor asks for it.
+var SRC = 'media/film.m3u8', hls = null, started = false, want = null;
+if (window.Hls && Hls.isSupported()) {
+  hls = new Hls({ autoStartLoad: false, maxBufferLength: 16, maxMaxBufferLength: 32, backBufferLength: 20, maxBufferSize: 90 * 1000 * 1000 });
+  hls.on(Hls.Events.ERROR, function (e, d) {
+    if (!d || !d.fatal) return;
+    if (d.type === Hls.ErrorTypes.NETWORK_ERROR) { setTimeout(function () { hls.startLoad(); }, 1500); }
+    else if (d.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
+    else $('#fail').hidden = false;
+  });
+  hls.loadSource(SRC); hls.attachMedia(v);
+} else if (v.canPlayType('application/vnd.apple.mpegurl')) { v.src = SRC; }
+else { $('#fail').hidden = false; }
+function load(t) { if (hls && !started) { started = true; hls.startLoad(t == null ? -1 : t); } }
+v.addEventListener('loadedmetadata', function () {
+  if (want != null && Math.abs(v.currentTime - want) > 1) { try { v.currentTime = want; } catch (e) {} }
+  want = null;
+});
+function begin() { load(want); start.hidden = true; v.controls = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+function fly(t) {
+  want = t; load(t);
+  try { v.currentTime = t; } catch (e) {}
+  begin();
+  var r = $('#the-film').getBoundingClientRect();
+  if (r.top < 0 || r.top > window.innerHeight * .5) $('#the-film').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}
+function mark() {
+  var t = v.currentTime || 0, d = v.duration || FILM.seconds, now = -1;
+  fill.style.width = Math.min(100, t / d * 100) + '%';
+  STOPS.forEach(function (s, k) { if (t >= s.t) now = k; });
+  if (t >= 167.5 || (t === 0 && v.paused)) now = t >= 167.5 ? 9 : -1;
+  Array.prototype.forEach.call(dots.children, function (li, k) { li.classList.toggle('past', k < now); li.classList.toggle('now', k === now); });
+}
+start.addEventListener('click', begin);
+dots.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) fly(Number(b.getAttribute('data-t'))); });
+v.addEventListener('play', function () { start.hidden = true; v.controls = true; });
+v.addEventListener('timeupdate', mark); v.addEventListener('seeked', mark);
+v.addEventListener('error', function () { $('#fail').hidden = false; });
+mark();
+
+// A quiet sky behind the page: the same stars each time.
+(function () {
+  var c = $('#sky'), x = c.getContext('2d');
+  function draw() {
+    var r = Math.min(window.devicePixelRatio || 1, 2), w = c.width = Math.round(innerWidth * r), h = c.height = Math.round(innerHeight * r), seed = 20261127;
+    function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+    x.clearRect(0, 0, w, h);
+    var n = Math.round(innerWidth * innerHeight / 2600);
+    for (var i = 0; i < n; i++) {
+      var px = rnd() * w, py = rnd() * h, m = Math.pow(rnd(), 5), size = (.35 + m * 1.5) * r, a = .16 + m * .8 + rnd() * .16, tint = rnd();
+      x.fillStyle = tint < .12 ? 'rgba(190,170,255,' + a + ')' : tint < .2 ? 'rgba(255,214,190,' + a + ')' : 'rgba(255,255,255,' + a + ')';
+      x.beginPath(); x.arc(px, py, size, 0, 6.2832); x.fill();
+    }
+  }
+  var timer; draw();
+  addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 160); });
+})();
+</script>
+</body>
+</html>

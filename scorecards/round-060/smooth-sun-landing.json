@@ -1,0 +1,115 @@
+{
+  "stop": "sun",
+  "commit": "5dd60616578492129874abd81ce19cc1d89d5fa9",
+  "engineHash": null,
+  "stopHash": null,
+  "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
+  "rate": 2,
+  "calibrate": true,
+  "kinds": [],
+  "only": [
+    "path"
+  ],
+  "limits": {
+    "rate": 2,
+    "reachFrames": 12,
+    "path": {
+      "maxStep": 0.08,
+      "maxRebound": 0.03,
+      "minEye": 0.87,
+      "minLeave": 0.07,
+      "seamFrames": 2,
+      "ringPx": 96,
+      "floors": {
+        "turnDeg": 0.05,
+        "speedPx": 0.5
+      }
+    },
+    "pictures": {
+      "tier": "draft",
+      "popWindow": 16,
+      "popFloor": 0.25,
+      "flowScale": 0.25,
+      "grid": [
+        16,
+        9
+      ],
+      "changeFrames": 8,
+      "changeBlurPx": 20,
+      "patternPx": 40,
+      "patternFloor": 1,
+      "ringBodies": [
+        "saturn"
+      ],
+      "maxLevelStep": 1.3,
+      "maxPop": 1.2,
+      "maxPopBlock": null,
+      "maxChange": null,
+      "maxPattern": 0.45
+    },
+    "place": {
+      "levelStep": 3.2,
+      "colourStep": 4,
+      "sideMean": 6,
+      "sideP99": 60,
+      "maxPop": 1.9
+    },
+    "parity": {
+      "formats": [
+        "uhd",
+        "master"
+      ],
+      "tier": "draft",
+      "at": {
+        "hold": [
+          0.5
+        ],
+        "dive": [
+          0.25,
+          0.5,
+          0.75
+        ],
+        "terrain": [
+          0.5
+        ],
+        "rise": [
+          0.25,
+          0.5,
+          0.75
+        ],
+        "travel": [
+          0.5
+        ]
+      },
+      "coarse": 8,
+      "maxMean": 12,
+      "maxCoarse": 3.2,
+      "maxBlockLevel": 12,
+      "maxLevel": 2.2
+    },
+    "counts": {
+      "format": "preview",
+      "tier": "draft",
+      "programs": 0,
+      "textures": 0,
+      "buffers": 0
+    },
+    "machine": {
+      "pointSize": 1000,
+      "samples": 0
+    }
+  },
+  "pass": true,
+  "why": [],
+  "parts": {
+    "path": {
+      "measured": true,
+      "pass": true,
+      "why": [],
+      "kinds": {
+        "landing": null
+      }
+    }
+  },
+  "seconds": 0.3
+}

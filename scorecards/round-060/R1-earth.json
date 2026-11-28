@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "night-side right limb and lower right of the disc (crops E, H, I)",
+   "what": "the small green aurora patches on the dark hemisphere, near the limb at mid-right and over southern South America, are missing or much fainter than in -a; the main northern aurora curtain is kept",
+   "fix": "restore the secondary aurora glows on the night side at the -a positions and brightness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper right aurora curtain (crop C)",
+   "what": "the red fringe above the green curtain is a little weaker and the curtain tips slightly less defined",
+   "fix": "raise the red upper fringe a touch and sharpen the curtain rays to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "star field and cloud texture across the frame",
+   "what": "slightly more fine grain/noise than -a, making the background read a bit busier",
+   "fix": "reduce grain or sharpening back to the -a level"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "black space above the horizon and deep ocean shadows",
+   "what": "the blacks are lifted slightly (darkest values a little higher than -a), so the sky is a hair less deep",
+   "fix": "pull the black point down to match -a"
+  }
+ ]
+}

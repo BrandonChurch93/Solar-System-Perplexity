@@ -1,10 +1,10 @@
 {
- "engineHash": "247ebad7e038ce06",
+ "engineHash": "a455bc02904b0d42",
  "stopHashes": {
-  "venus": "54d2208ee58b3ad9",
-  "earth": "2b75dbd9c40c8387",
-  "mars": "2e6bd53c2517a02a",
-  "jupiter": "e92e46df4195fb6b"
+  "venus": "c3eba160eb23e536",
+  "earth": "065c92c05fff6050",
+  "mars": "8199038c43414b93",
+  "jupiter": "5c350312424ada50"
  },
  "format": "16x9",
  "tier": "final",
@@ -29,9 +29,9 @@
    2726,
    2782
   ],
-  "kind": "film",
+  "film": true,
   "part": 2,
-  "signature": "[\"cb3ca3e135caa912049b213ac1ec57a150627737bb11beb3368045654898b531\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"c29ef4c1f3089d6d29297210f4471594b5cf3ed4814f376867a3999d924aabd3\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

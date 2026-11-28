@@ -1,0 +1,77 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panels A, F, and I, lit storm ridges",
+   "what": "cream and rust crests are crushed, about 15 to 24 levels darker than A, and the warm color goes dull, so shear filaments soften",
+   "fix": "lift the white point, restore warm highlight saturation, and bring local contrast back on the lit ridges"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panels A, B, F, and G, shadow troughs",
+   "what": "troughs and midtones are lifted, about 4 to 8 levels, so the storm reads flatter and milkier than A",
+   "fix": "drop the shadow floor and midtones back to A's black depth"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panel D, side-lit cloud waves",
+   "what": "mids and highlights run darker, about 6 to 14 levels, and the wave relief does not hold A's separation",
+   "fix": "raise the side-lit crests and open the troughs until the relief matches A"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "panel E, nightside lightning",
+   "what": "the blue emission highlights are clamped, tens of levels under A, and the surrounding darks are slightly hazy",
+   "fix": "restore the lightning peaks and rim specks, then settle the nightside floor to A"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "vortex walls and lit cloud deck",
+   "what": "the same grade loss at frame scale: peaks above 160 are about 7 levels darker, and midtone ridges wander by about 13 levels, darker in the lower troughs and slightly lifted on the left wall",
+   "fix": "match A's highlight curve on the eyewall and crests, and even the left wall and lower troughs to A rather than a global lift"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "panel H, atmospheric deck",
+   "what": "the lit deck and limb haze sit about 12 levels darker in the highlights",
+   "fix": "lift the deck highlights and limb haze to A"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sky and Milky Way",
+   "what": "the same stars are several times hotter at the core, about 15 in A versus 60 to 75 in B, and the galactic dust reads slightly warmer",
+   "fix": "dim the star peaks and cool the galactic core back to A"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left limb",
+   "what": "the limb glow is slightly brighter and a touch wider, and the near-limb clouds run slightly cooler",
+   "fix": "narrow the haze falloff and warm it to A"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "panel A, Great Red Spot and Io",
+   "what": "filament micro-contrast and Io's lit face do not hold A, and the shadow penumbra is slightly harder",
+   "fix": "match A's softer film texture on the spot and soften Io's shadow edge to A"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "panels B and D limb, panel I terminator",
+   "what": "sunlit limb bloom is slightly hot, and the terminator roll-off is slightly darker and narrower",
+   "fix": "reduce the limb bloom and open the terminator to A"
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 4737-4753, end of the dive into the terrain view",
+   "what": "the approach is still very fast at 4745 (the cloud ridge doubles in size and the horizon flattens within 8 frames), then the camera is almost still from 4752 (sheet-03). The dive ends in a hard stop instead of settling, so the camera loses its sense of mass",
+   "fix": "stretch the ease-out over the last 20-30 frames of the dive so speed falls toward zero before 4752, or start the terrain hold with some leftover forward drift that slowly dies away"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "cloud ridge, frames 4729 to 4753",
+   "what": "the ridge starts as a thin, sharp-edged white line (4729-4737), then reads as a different, much taller bank of 3D clouds by 4753 with a changed layout. It looks like the clouds grow or swap models rather than get nearer, so the handoff from globe to terrain pops",
+   "fix": "use one cloud asset all the way down, with its height and detail fixed from the start, and let the perspective of the approach do the growing. If a level-of-detail swap can't be avoided, cross-fade it over 10 or more frames while the camera is moving fast"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4984 to 5024, the rise",
+   "what": "the rise doesn't come back to the hold. In the hold the sun is upper right, the moon upper left, the lit side faces right and the rings are faint. At the end of the rise there is no sun in frame, the moon is on the right, the lit side faces upper left and the rings are big and bright. Getting there would take a fast camera swing of about 180 degrees in roughly 40 frames, which these frames don't show, so direction appears to change suddenly",
+   "fix": "reverse the dive path on the way out so the rise ends near the hold framing with the same sun, moon and ring look. If a new angle is wanted, slow the swing down and keep the sun or moon in frame as a fixed reference"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "whole terrain segment, frames 4770-4949",
+   "what": "there is little parallax. The cloud ridge, the vortex and the horizon all shift together like one flat plate under a small pan, so the near ground does not move against the horizon and the view has little depth",
+   "fix": "add a slow sideways or forward move close to the cloud tops so the near ridge visibly passes the far horizon and the vortex, and put the ridge at a separate depth from the ocean surface below it"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "cloud ridge puffs along its whole length",
+   "what": "between samples about 16 frames apart, the shapes of the cloud puffs change more than their slow drift explains. The ridge seems to boil or swim in place instead of flowing in one direction",
+   "fix": "lower the rate at which the noise changes over time, and push the cloud detail along with the wind direction so it doesn't re-form in place"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 4977-4990, lower left",
+   "what": "soft, out-of-focus cloud puffs suddenly cross the foreground, and the ring arc shows up at the right edge between 4984 and 4990 with no lead-in",
+   "fix": "have the foreground puffs come in gradually, and fade the rings in over the climb so they are already faintly there before the planet's edge clears"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "great dark spot, frames 4530-4679",
+   "what": "the storm and cloud bands barely rotate over 150 frames, so the planet reads as almost frozen while the moon drifts",
+   "fix": "give the atmosphere a slow but visible shift in longitude, and a little cloud-band shear, while the camera holds"
+  }
+ ]
+}

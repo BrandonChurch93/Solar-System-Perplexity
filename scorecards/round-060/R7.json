@@ -1,0 +1,103 @@
+{
+ "critic": "R7",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crops F and G, coronal arcade",
+      "what": "mid-size filament strands soften and blend, past finest-grain loss, though the arcade still has form",
+      "fix": "keep more mid-frequency contrast on the bright arcade so strand separation survives the stress encode"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R7",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "Encoded crops E, H, and I, along the dark canyon and adjacent ridges",
+      "what": "Angular compression patches break up the canyon shadows and merge distinct ridge faces into soft chunks. This changes recognizable terrain shapes, not just the finest grain.",
+      "fix": "Give this Mars close-up more bits and lower quantization in the canyon shadows, then check crops E, H, and I at native size again."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "Encoded crops B, C, and D, in the dust haze and around the crater rims",
+      "what": "Smooth orange haze turns into broad, partly squared-off tonal patches, visible around the bright filament in C and in the darker crater surround in D.",
+      "fix": "Reduce quantization in the smooth haze and shadow gradients; keep intermediate processing at higher bit depth and check for patch boundaries after the stress encode."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "Encoded crops D, H, and I, in the dusty lowlands and canyon shadow",
+      "what": "Low-contrast terrain shading is flattened and slightly patchy compared with the original, though the main canyon and craters remain legible.",
+      "fix": "Preserve low-contrast shading with a lower quantizer in the Mars shots, without spending bits on the finest grain."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R7",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-20.png",
+      "where": "crops A (848,434) and E (1328,704), sparse dark star field",
+      "what": "on the encoded side a clear share of the faint stars are gone and the remaining ones are dimmer and softer, so the empty sky looks thinner than the source; the same loss shows in image-22 and image-24",
+      "fix": "lower CRF / raise the bitrate floor for dark low-motion frames, use -tune grain or turn on psy-rd/aq-mode 3 so single-pixel stars are not quantized away, or render the stars as slightly larger 2-3 px points"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crops A, G and E, the eroded plateau texture and bright slope",
+      "what": "the fine ridges smear into soft blobs and the cliff edges in E pick up a smeary, slightly blocky look, so the surface reads less crisp than the source (still readable, not mush)",
+      "fix": "give more bits to high-detail motion frames (raise maxrate/bufsize or use a two-pass encode) and turn on aq-mode 3 to keep texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crop C (1328,164), haze over the dark basin",
+      "what": "the soft haze gradient loses a little tonal smoothness and shows faint macroblock edges",
+      "fix": "encode in 10-bit or add a light dither or grain to the haze before encoding"
+     },
+     {
+      "severity": "minor",
+      "file": "image-20.png",
+      "where": "crops B, C, F, G, Milky Way dust lanes",
+      "what": "the nebula texture flattens slightly and loses some star-dust grain; no hard blocking",
+      "fix": "acceptable at this bitrate; optionally use -tune grain"
+     },
+     {
+      "severity": "minor",
+      "file": "image-19.png / image-21.png / image-23.png",
+      "where": "whole pack",
+      "what": "the three planet stills look like the same frame, so the planet shot is checked at only one moment; no banding seen in the rim glow or dark planet disc",
+      "fix": "pull stills from several different times in the stress encode, including a high-motion moment"
+     }
+    ]
+   }
+  }
+ ]
+}

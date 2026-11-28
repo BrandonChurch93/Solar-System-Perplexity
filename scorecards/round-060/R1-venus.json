@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper limb above the main vortex, also in the upper-right of the crop grid",
+   "what": "A narrow amber line rides just outside the bright limb and reads as a second edge; the target goes from one bright edge into a continuous soft glow.",
+   "fix": "Blend the narrow outer line into the atmospheric falloff while preserving the contour and the breadth of the halo."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sky tiles B through H, especially the dust band in F, G and H",
+   "what": "Fine star points and the grain of the galactic dust are a little less distinct. This also appears in the full hold frame.",
+   "fix": "Recover the smallest stellar cores and dust texture without raising the black floor or sharpening the whole frame."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tile I, lightning on the lower shadow-side clouds",
+   "what": "The pink-white lightning reads a touch hotter and more concentrated in the cores than the target, competing more with the dim branches.",
+   "fix": "Pull the core highlights down slightly and keep the fine branches visible against the dark folds."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tile C, sun, horizontal flare and nearby stars",
+   "what": "The amber veil is slightly fuller and the horizontal flare is less defined away from the core; faint stars near the halo are less legible. The effect is visible in the full terrain frame too.",
+   "fix": "Reduce the diffuse amber veil slightly and bring back the thin horizontal flare and adjacent faint star points without moving the sun."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tiles B, F, G and H, terrain limb and upper star field away from the sun",
+   "what": "The distant horizon and first cloud bands are slightly softer and warmer, and the finer blue-white stars have less point contrast.",
+   "fix": "Restore crisper separation between the horizon and the cloud bands, keep the sky neutral-cool, and recover the finer star points."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tiles A, D, E, F and I, raking light across cloud ridges and shafts",
+   "what": "The lit cloud slopes are fractionally warmer and more filled in, reducing separation between gold edges, shadow faces and adjacent shafts compared with the target.",
+   "fix": "Dial back the warm midtones and restore local light-to-shadow separation while retaining the same cloud silhouettes and ray directions."
+  }
+ ]
+}

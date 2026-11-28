@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "sunlit ocean tiles, storm wall and lower blue water",
+      "what": "the water is a combed plastic sheet with no glitter, and the cloud edges are airbrushed noise stretched along the flow",
+      "fix": "give the ocean a Fresnel glint and break the cloud streaks into clumpy, shadowed cells"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "top left tile, storm and white bands",
+      "what": "the bands are flat, smeared strokes with no cloud-top shadow, so the deck reads as paint",
+      "fix": "add self-shadow and uneven clump scale so the streaks are not one combed layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "upper left tile, the moon",
+      "what": "the disc is soft and nearly featureless, with no crater rims, so it fails at native size",
+      "fix": "restore small crater relief and keep the lit face from going featureless white"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "left night side and terminator",
+      "what": "the faint clouds are a smudged fade with almost no structure",
+      "fix": "keep a little high cloud structure in the shadow instead of a flat airbrush"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "star just outside the upper right limb",
+      "what": "the core is a few pixels wide with a purple fringe, not a clean point",
+      "fix": "keep bright stars to one or two pixels and drop the colored halo"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-11.png",
+      "where": "crops N and O, near cloud bank",
+      "what": "The brightest clouds are soft white folds with long, combed strands and little internal shading. At native size the bank reads as a smeared ribbon rather than a volume.",
+      "fix": "Break the strands into irregular volumes at several scales and restore self-shadowing and fine detail in the bright cores."
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crop A around the storm eye and crops G and I toward the horizon",
+      "what": "The blue surface has a nearly uniform etched grain that hooks sharply around the eye and stretches into parallel streaks toward the horizon.",
+      "fix": "Vary the grain by scale and direction, reduce the tight warp around the eye, and filter the fine detail as it recedes."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crops C, E and I, ring arcs",
+      "what": "The rings resolve into uniformly soft blue bands, with bright background stars staying similarly prominent through the densest streaks and through the gaps.",
+      "fix": "Give the bands finer radial structure and use the ring density to modulate star transmission."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "crops Q and R, moon at the far right",
+      "what": "The moon has an evenly blurred limb and a pink cap with faint, pulled-out streaks but little readable surface relief.",
+      "fix": "Resolve the limb more cleanly and add fine, irregular albedo and relief on the lit cap without sharpening the terminator into a hard line."
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops C and F, just under the bright horizon",
+      "what": "A narrow blue-violet line runs parallel to the bright rim and reads as a second outline rather than a continuous falloff.",
+      "fix": "Blend the inner color transition into the atmospheric falloff while keeping the silhouette defined."
+     }
+    ]
+   }
+  }
+ ]
+}

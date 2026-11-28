@@ -220,10 +220,16 @@ float keptAzGain(float r, float phi) {
   vec4 h = vec4(cos(phi), sin(phi), cos(2.0 * phi), sin(2.0 * phi));
   return clamp(mix(keptAzRow(i, h), keptAzRow(i + 1, h), t), 0.4, 1.7);
 }
-float keptKnots(float r, float t[9]) {
+// Each of the two reads its own uniform array where it lives (see sheetThrough in kept/rings.ts for the reason).
+float keptThrough(float r) {
   int i = 0;
   for (int k = 1; k < 8; k++) if (r >= uKSheetR[k]) i = k;
-  return mix(t[i], t[i + 1], clamp((r - uKSheetR[i]) / (uKSheetR[i + 1] - uKSheetR[i]), 0.0, 1.0));
+  return mix(uKSheetT[i], uKSheetT[i + 1], clamp((r - uKSheetR[i]) / (uKSheetR[i + 1] - uKSheetR[i]), 0.0, 1.0));
+}
+float keptWedge(float r) {
+  int i = 0;
+  for (int k = 1; k < 8; k++) if (r >= uKSheetR[k]) i = k;
+  return mix(uKWedgeG[i], uKWedgeG[i + 1], clamp((r - uKSheetR[i]) / (uKSheetR[i + 1] - uKSheetR[i]), 0.0, 1.0));
 }
 // how far the sheet of the far look is lit at the place along and beside the axis of the globe's shadow, mw the
 // pixel's width of miss
@@ -255,7 +261,7 @@ float keptFront(float r, float lit, bool fore, float bb, float bw, float fw) {
 // eye, and by the one law less where the view runs flatter over the plane and more where it runs steeper. The
 // far look and the model near the sheet both draw it, at every height of the lens
 float keptVeil(float r, float mu, float front) {
-  return (1.0 - pow(keptKnots(r, uKSheetT), keptRise(mu))) * front;
+  return (1.0 - pow(keptThrough(r), keptRise(mu))) * front;
 }
 // the opacity of the shaded plane, which lets no sky through from the globe on (sheet.json shadow.solid, as the
 // set of the kept build has it, kept/rings.ts): no star shows between the night side and the shaded rings. past:
@@ -298,7 +304,7 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   float sheet = keptFront(r, lit, fore, bb, bw, fw);
   a = max(a, keptVeil(r, mu, sheet));
   a = max(a, keptShade(r, along, miss, mw, keptEdge(bb, bw)));
-  vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptKnots(r, uKWedgeG) * sheet * day;
+  vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptWedge(r) * sheet * day;
   for (int j = 0; j < (over > 0.0 ? 1 : 0); j++) {
     float sx = (uKStrand.x + (r - uKEdge.x) * uKStrand.y - uKSpan.x) * uKSpan.y;
     float sl = texels * grad * uKStrand.y * 1.5;

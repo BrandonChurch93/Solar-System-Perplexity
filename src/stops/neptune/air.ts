@@ -115,7 +115,7 @@ vec4 air(vec3 dir, bool ground) {
     float tau = uLineShape.z * path;
     sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w * (1.0 - uLineFade.z * smoothstep(uLineFade.x, uLineFade.y, dot(tp, uSunW))) * (1.0 - on);
   }
-  float crest = on * (1.0 - uCrestFall.y * pow(sector, uCrestFall.z)) * (1.0 + uCrestHead.w * smoothstep(uCrestHeadEdge.x, uCrestHeadEdge.y, dot(tp, uCrestHead.xyz)));
+  float crest = on * (1.0 - uCrestFall.y * pow(abs(sector), uCrestFall.z)) * (1.0 + uCrestHead.w * smoothstep(uCrestHeadEdge.x, uCrestHeadEdge.y, dot(tp, uCrestHead.xyz)));
   for (int k = 0; k < (crest > 0.0 && b > 0.0 ? 1 : 0); k++) {
     float ro = rc + uCrest.x;
     float thin = (sqrt(max(ro * ro - rt2, 0.0)) - sqrt(max(rc * rc - rt2, 0.0))) * (ground ? 1.0 : 2.0);

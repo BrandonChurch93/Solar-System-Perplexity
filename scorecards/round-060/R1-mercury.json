@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "upper right, the gap between the sun and the planet limb",
+   "what": "the horizontal flare is fainter, and the curved coronal filament is gone, replaced by a finer radial comb. The inner edge of the crescent is darker.",
+   "fix": "restore the target flare streak and curved prominence, and raise the crescent's inner glow"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "tile C sun rim and tile G lit limb",
+   "what": "the sun crop is less warm, and the brightest limb pixels are rolled off by about 12 to 21 levels",
+   "fix": "warm the corona back toward the target amber and lift the limb highlights"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "lower half, foreground cratered terrain",
+   "what": "fine detail is softer, with edge energy down about 20 percent. Rim highlights are duller by 8 to 23 levels, and shadow floors are lifted.",
+   "fix": "restore micro-contrast, push rim highlights back up, and drop the shadow floors to the target black"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tiles H, D, F, and E, the near ridges and crater rims",
+   "what": "the same softness and crushed highlights show at native size. Tile H is worst: edge energy is about a quarter lower, and the brightest peaks fall 20 to 50 levels.",
+   "fix": "match the target's native ridge sharpness and specular peaks in those crops"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lower-left night side",
+   "what": "the faint night-side fill is crushed, so the disk goes flatter and blacker where the target still shows a little surface",
+   "fix": "lift the night-side fill to the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lower-right edge",
+   "what": "the lower-right edge is brighter and warmer than the target",
+   "fix": "drop and cool that edge back to the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tile I, lower-right starfield",
+   "what": "the sky and dust are lifted, warmer, and softer than the target",
+   "fix": "drop and cool the sky, and bring the dust detail back"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "terrain edges across the frame",
+   "what": "features sit about a pixel up and to the right of the target, which softens the rims",
+   "fix": "nudge the terrain a pixel down and left so the edges sit on the target"
+  }
+ ]
+}

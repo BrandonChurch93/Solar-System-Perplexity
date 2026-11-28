@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "Frames 1721–1829, eastern Pacific cloud spiral and upper-right aurora",
+   "what": "The globe drifts subtly, but the cloud spiral and auroral ridges keep nearly the same shapes relative to it, making the hold feel more like a moving still than a living planet.",
+   "fix": "Give the cloud layer slow independent advection and gently vary the auroral ridges over time without moving the stars."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "Frames 1920–1985, foreground cloud banks and the turquoise shallows on the right",
+   "what": "The first part of the terrain glide has weak depth separation: foreground clouds and coastline barely shift against the distant horizon until later in the move.",
+   "fix": "Carry a little more lateral camera velocity into the early glide and keep foreground cloud layers at distinct heights so their parallax develops sooner."
+  }
+ ]
+}

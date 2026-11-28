@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "lower right of the planet disc, in the terminator shadow (about x 860, y 500; crop A lower right)",
+   "what": "a large spiral storm vortex appears that does not exist in the target, which changes the read of the planet face",
+   "fix": "remove the vortex and keep the smooth banded shadow of the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "right side of the disc near the terminator (about x 880, y 390)",
+   "what": "the small bright cloud fleck under the cloud at x 855, y 348 is missing",
+   "fix": "restore the small cloud fleck from the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Milky Way band right of the planet (crops E and F)",
+   "what": "the dust lanes and bright core of the Milky Way are softer and more smeared, with less crisp star clusters than the target",
+   "fix": "sharpen the Milky Way texture and restore dark lane contrast to match the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper right sky, star field and rings (crops C, F, G)",
+   "what": "fine detail is lower (star points and ring strands softer, about 10 percent less edge detail) and the sky is slightly lifted",
+   "fix": "restore star and ring sharpness and pull the sky blacks down slightly to match the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "planet surface and limb (crops A, E)",
+   "what": "cloud streaks are slightly softer and the surface is marginally brighter than the target",
+   "fix": "add back fine cloud texture and lower the surface exposure a touch"
+  }
+ ]
+}

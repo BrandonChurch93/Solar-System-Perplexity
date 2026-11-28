@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "exit globe, frames 1584-1604, compared with sheet-01 frame 1110",
+   "what": "the pull-out eases as one move, but it does not come back to the place it left: key light has swung from the left limb to the top and upper right while the vortex stays near 1:30-2:00, and the nebula behind the approach is gone",
+   "fix": "lock the sun to the same surface features across the rise, and let the starfield shift only with the camera's real yaw"
+  }
+ ]
+}

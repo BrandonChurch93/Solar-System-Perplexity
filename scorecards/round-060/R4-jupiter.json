@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 3010-3051 across center and upper-right limb",
+   "what": "the orbital terrain view (with its own curved horizon, black sky and night shadow) is stamped as a tiny dark decal northwest of the real Great Red Spot and cross-dissolved over the bright sunlit 3D globe, creating a ghosted double horizon and an extreme dark-to-bright-to-dark exposure swing",
+   "fix": "dive directly into the matching storm location with aligned lighting and horizon geometry so the globe-to-terrain transition carries one continuous horizon, scale and exposure without cross-dissolving two mismatched views"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 3253-3280 across center and upper-right limb",
+   "what": "the rise reverses the same broken cross-dissolve, ghosting bright sunlit globe clouds over the dark terrain limb and collapsing the orbital terrain view into a tiny dark-stained patch beside the actual Great Red Spot before pulling out",
+   "fix": "match the rise camera path, storm position, horizon curvature and sun angle to the end of the terrain shot so pulling back into the full globe reads as one uninterrupted ascent"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 3060-3239 across vortex, near clouds and upper-right limb",
+   "what": "the curved planetary horizon and background starfield remain locked in place across all 180 frames while the red vortex core swells nearly fivefold and slides upward toward the static limb, giving no 3D camera parallax and making the cloud deck swim inside a frozen silhouette",
+   "fix": "drive the terrain view with genuine 3D camera parallax so near clouds and the distant limb move at depth-consistent relative rates without stretching or sliding the storm against a locked horizon"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 3053-3064 along the planetary limb and upper-right starfield",
+   "what": "camera motion across the dive-to-terrain cover does not carry through as one move: the expanding limb and starfield decelerate to a complete freeze at frames 3059-3060 when entering the locked terrain shot",
+   "fix": "carry continuous camera velocity and horizon drift smoothly across the cover into the terrain segment instead of braking to a dead stop at frame 3060"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 3235-3246 along the planetary limb and upper-right starfield",
+   "what": "across the terrain-to-rise cover, the horizon and stars sit completely still through frame 3240 and then abruptly begin accelerating outward at frames 3241-3246 instead of continuing an already moving camera trajectory",
+   "fix": "maintain continuous camera drift through the end of terrain and ease smoothly into the rise pullback across frames 3235-3246"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 3019-3027 lower-left cloud bands (and matching frames 3267-3274 in sheet-05.png)",
+   "what": "around the border of the projected terrain patch at close range, the surrounding globe cloud texture stretches into coarse diagonal streaks",
+   "fix": "use higher-resolution multi-scale cloud detail or transition before exceeding the globe texture resolution and projection limits"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 3174-3239 across the sunlit storm deck",
+   "what": "overall exposure drifts downward by roughly 20 percent over the last third of the terrain segment while the horizon and sun geometry remain fixed",
+   "fix": "hold consistent exposure across the terrain segment unless driven by a visible change in camera position relative to the terminator"
+  }
+ ]
+}

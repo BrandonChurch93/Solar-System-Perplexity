@@ -225,7 +225,7 @@ float veilAt(vec2 uv, float least, float t) {
     // fan.veil.arms: how many arms of the sheet stand for one of the deck's, and the power that draws them thin.
     float armWave = 6.2831853 * (rs + uArms.w) / (uArms.x * uVeilArms.x * sqrt(1.0 + uArms.y * uArms.y));
     float turn = atan(ds.y, ds.x) + uArms.y * log(rs + uArms.w) - uSpin.x * uSpin.z * t;
-    shape *= mix(1.0, pow(0.5 + 0.5 * cos(uArms.x * uVeilArms.x * turn), uVeilArms.y), uVeilStorm.y * exp(-(rs * rs) / (uStorm.w * uStorm.w)) * smoothstep(least, 2.0 * least, armWave));
+    shape *= mix(1.0, pow(abs(0.5 + 0.5 * cos(uArms.x * uVeilArms.x * turn)), uVeilArms.y), uVeilStorm.y * exp(-(rs * rs) / (uStorm.w * uStorm.w)) * smoothstep(least, 2.0 * least, armWave));
   }
   return shape * mix(1.0 - uFanBand.w, 1.0, clamp(0.5 + uFanMake.z * sum, 0.0, 1.0));
 }
@@ -253,7 +253,7 @@ float veilDepth(vec3 oc, vec3 rd, float b, float rt2, bool through, float pix, f
     float lg = 0.288675 * (l1 - l0);
     float ua = clamp((uRadius + uVeil.y - sqrt(rt2 + (lm - lg) * (lm - lg))) / span, 1e-4, 1.0);
     float ub = clamp((uRadius + uVeil.y - sqrt(rt2 + (lm + lg) * (lm + lg))) / span, 1e-4, 1.0);
-    float len = uVeilFall.y * 0.5 * (pow(ua, uVeilFall.x) + pow(ub, uVeilFall.x)) * (l1 - l0);
+    float len = uVeilFall.y * 0.5 * (pow(abs(ua), uVeilFall.x) + pow(abs(ub), uVeilFall.x)) * (l1 - l0);
     float mu = max(lm / sqrt(rt2 + lm * lm), 0.02);
     for (int way = 0; way < (through ? 2 : 1); way++) {
       float tm = way == 0 ? -b - lm : -b + lm;
@@ -322,7 +322,7 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
   float carry = 0.0;
   finest = lam;
   for (int k = 0; k < int(uDeckMake.y); k++) {
-    float draw = pow(uDeckWave.x / lam, uDeckWave.w);
+    float draw = pow(abs(uDeckWave.x / lam), uDeckWave.w);
     float st = min(uDeckWave.y * draw, 1.0);
     float al = min(uSpiral.y * draw, uSpiral.x);
     float pt = uArms.y * (1.0 - clamp((al - uSpiral.y) / max(uSpiral.x - uSpiral.y, 1e-4), 0.0, 1.0));
@@ -347,7 +347,7 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
     if (m < 0.985 && keepZ > 0.0) {
       float n = zonal(vec2(uv.x, uv.y + carry), lam, st, t, seed);
       z = keepZ * (n - 0.5);
-      rz = keepZ * pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
+      rz = keepZ * pow(abs(1.0 - abs(2.0 * n - 1.0)), uWisp.y);
     }
     if (m < 0.985 && more > 0.0) {
       float zs = 0.0;
@@ -357,7 +357,7 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
         vec2 o = gRun.xy * ((float(i) + 0.5) / gRun.z - 0.5);
         float n = zonal(vec2(uv.x + o.x, uv.y + o.y + carry), lam, st, t, seed);
         zs += n - 0.5;
-        rs += pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
+        rs += pow(abs(1.0 - abs(2.0 * n - 1.0)), uWisp.y);
       }
       z += more * zs / gRun.z;
       rz += more * rs / gRun.z;
@@ -365,7 +365,7 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
     if (m > 0.015 && keepW > 0.0) {
       float n = winding(rho + carry / uSpiral.x, th, lam, al, pt, t, seed);
       w = keepW * (n - 0.5);
-      rw = keepW * pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
+      rw = keepW * pow(abs(1.0 - abs(2.0 * n - 1.0)), uWisp.y);
     }
     sum += amp * mix(z, w, m);
     high += highAmp * mix(z, w, m);
@@ -729,10 +729,10 @@ float toSun(vec3 q, float H, out float lit) {
 // through. With no light and all let through it gives the colour back to the bit.
 vec3 toHold(vec3 c) {
   vec3 x = max(c, vec3(0.0)) * uGain / uFallPivot;
-  return mix(pow(x, 1.0 / uFarFall.xyz), x, smoothstep(0.6, 1.2, x));
+  return mix(pow(abs(x), 1.0 / uFarFall.xyz), x, smoothstep(0.6, 1.2, x));
 }
 vec3 toGround(vec3 y) {
-  return mix(pow(y, uFarFall.xyz), y, smoothstep(0.6, 1.2, y)) * uFallPivot / max(uGain, 1e-6);
+  return mix(pow(abs(y), uFarFall.xyz), y, smoothstep(0.6, 1.2, y)) * uFallPivot / max(uGain, 1e-6);
 }
 // The end's curve (deep.json, globe.fall) on a colour that has the film's gain: the scene's colours brought to the hold's look,
 // by 1 over the full powers at every height (way C). None where the power is 1.
@@ -745,7 +745,7 @@ vec3 fallBack(vec3 y) {
   vec3 hi = max(want, vec3(1.2));
   for (int i = 0; i < 22; i++) {
     vec3 m = 0.5 * (lo + hi);
-    vec3 less = vec3(lessThan(mix(pow(m, uFallPower), m, smoothstep(0.6, 1.2, m)), want));
+    vec3 less = vec3(lessThan(mix(pow(abs(m), uFallPower), m, smoothstep(0.6, 1.2, m)), want));
     lo = mix(lo, m, less);
     hi = mix(m, hi, less);
   }
@@ -755,7 +755,7 @@ vec3 fallBack(vec3 y) {
 vec3 fallEnd(vec3 c) {
   if (!any(notEqual(uFallPower, vec3(1.0)))) return c;
   vec3 x = max(c, vec3(0.0)) / uFallPivot;
-  return mix(pow(x, uFallPower), x, smoothstep(0.6, 1.2, x)) * uFallPivot;
+  return mix(pow(abs(x), uFallPower), x, smoothstep(0.6, 1.2, x)) * uFallPivot;
 }
 vec3 underAir(vec3 c, vec3 add, vec3 clear) {
   vec3 y = toHold(c);
@@ -995,8 +995,9 @@ void main() {
     float slabShare = max(1.0 - 1.0 / max(slabFeet, 1e-6), 0.0);
     float slabSum = 0.0;
     for (int j = 0; j < 8; j++) {
-      if (float(j) >= uSlab.x) break;
-      slabSum += layerAt(normalize(dcl + slabRun * (slabShare * (float(j) + 0.5) / uSlab.x)), softCloud * max(slabFeet, 1.0), 0.0, tx).a;
+      if (float(j) < uSlab.x) {
+        slabSum += layerAt(normalize(dcl + slabRun * (slabShare * (float(j) + 0.5) / uSlab.x)), softCloud * max(slabFeet, 1.0), 0.0, tx).a;
+      }
     }
     mapCloud = slabShare > 0.0 && uSlab.x > 0.5 ? slabSum / uSlab.x : mapCloud;
     float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
@@ -1007,16 +1008,16 @@ void main() {
     // The streamers' far level lies on the map as its own cloud does (cirrusFlat).
     mapCloud = 1.0 - (1.0 - min(mapCloud, 1.0)) * (1.0 - cirrusFlat(oc, rd, b, rt2, pix, t));
     float ndlSheet = dot(sheetUp, uSun);
-    vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
+    vec3 deckFar = mapDeck * knotDeck(ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
     farCover = min(mapCloud, 1.0) * smoothstep(-0.09, -0.03, ndlSheet);
-    farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
+    farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knotCloud(ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
     // The end of this shader raises every channel to uFallPower (the scene is made in the colours of the old grade of the ground
     // and its end brings them to the hold's look: 1 over the full powers at every height, way C), so that is undone here
     // beforehand: the far look leaves this shader as the globe's own picture of the map at every height. uFarFall holds the full
     // powers in xyz. The old grade of the globe by the height (planet.ts, FALL_GLSL; deep.json, globe.fall) runs here at the
     // power 1 and changes nothing.
     vec3 fallFar = fallGrade(farLook * uGain, uFallPivot, uFarFall.xyz * uFallPower, uFarFall.w) / uFallPivot;
-    farLook = mix(pow(fallFar, 1.0 / uFallPower), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot / max(uGain, 1e-6);
+    farLook = mix(pow(abs(fallFar), 1.0 / uFallPower), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot / max(uGain, 1e-6);
   }
 
   // The deck's colour is the map's at every place, as the globe's own lines light it (their Sun and their air are in it already, so
@@ -1171,7 +1172,7 @@ void main() {
     vec3 qm = deckHit ? qb + normalize(qb) * uHazeLow.y : oc + rd * clamp(-b, ta, tb);
     // One Sun, the globe's: the air is lit as the deck under it is, by the globe's own curve of light at the height of the Sun
     // there (its green, as a share of the curve's top), so no air stands bright over a deck that the globe's curve leaves dark.
-    float sunCurve = knot(uGDeck, dot(normalize(qm), uSun)).g / max(knot(uGDeck, 1.0).g, 1e-6);
+    float sunCurve = knotDeck(dot(normalize(qm), uSun)).g / max(knotDeck(1.0).g, 1e-6);
     float forward = (1.0 - uHazeMake.y * uHazeMake.y) / pow(1.0 + uHazeMake.y * uHazeMake.y - 2.0 * uHazeMake.y * sunView, 1.5);
     float phase = mix(0.75 * (1.0 + sunView * sunView), forward, uHazeMake.x);
     vec3 depthAll = vec3(lowAll + highAll);

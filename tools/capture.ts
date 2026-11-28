@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { createReadStream, createWriteStream, existsSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { createServer, type Server } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
@@ -11,12 +12,19 @@ import { chunksOf, clock, frameName, rangeOf, under, wholePng, type Chunk, type 
 // The capture of the film on a machine with a graphics card (kit/PROGRESS.md, second review note of 2026-11-23, plan H).
 //   npm run capture -- [--stop ID] [--from K] [--to K] [--format uhd] [--rate 2] [--tier final] [--out DIR]
 //                      [--chunk 600] [--keep-frames] [--keep-parts] [--no-join] [--crf 12] [--browser chrome|PATH] [--headless] [--allow-software] [--ignore-limits]
+//                      [--shutter 360] [--expect-gpu WORDS] [--frames K,K,...] [--frame-timeout 3600] [--angle NAME]
 // Opens the built app in the installed browser, steps every capture frame with showcase.renderFrame(k, tier) (after showcase.ahead when the page
 // has it: the loads and the warm start, all of them at the first frame of a page) and saves it as a PNG named by its number. A run that was stopped goes on where it stopped: frames whose file is whole and chunks whose part is whole are skipped.
 // With ffmpeg, every chunk of frames that is whole is encoded to a part at near lossless quality, the part is checked and the PNGs of that
 // chunk are removed (--keep-frames keeps them); at the end the parts are joined to one MP4 at fps times rate. A manifest lies beside the film.
 // --from and --to count capture frames (film frame times rate), both counted in. The limits of the machine's graphics are printed and written to
 // the manifest; the run stops when one is under what the film needs at the format (src/core/caps.ts and smooth.machine in the config).
+// --shutter is the open time of the camera in degrees of one capture frame. Left out, it is the film's own open time: film.shutterDegrees times
+// the rate (360 at rate 2), so that every second frame of a rate 2 capture is the frame of the film at its own rate, with the same blur.
+// --expect-gpu WORDS stops the run when the name of the graphics the browser draws on does not hold these words (for example "RTX 5080").
+// --frames K,K,... draws only these capture frames and keeps them as PNG files (no parts, no film); the manifest then holds the time of each.
+// --frame-timeout SECONDS closes the page when one frame takes longer and tries it again on a fresh page (0 is no limit, the value with --allow-software).
+// --angle NAME passes --use-angle=NAME to the browser (d3d11, gl, vulkan, metal), for a machine where the browser's own choice does not draw.
 
 const TYPES: Record<string, string> = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
@@ -40,26 +48,37 @@ const format = formatId(cfg, a.format ?? 'uhd')
 const size = cfg.formats[format]!
 const rate = whole('rate', 2)!
 if (rate < 1) fail('--rate is at least 1')
+const filmShutter: number = cfg.raw.film.shutterDegrees
+const shutter = whole('shutter', Math.min(360, filmShutter * rate))!
+if (shutter > 360) fail('--shutter is 0 to 360 degrees')
+const shutterQuery = rate > 1 || a.shutter !== undefined ? '&shutter=' + shutter : ''
+const frameTimeout = whole('frame-timeout', a['allow-software'] === 'true' ? 0 : 3600)!
 const tier = a.tier ?? 'final'
 if (!Object.hasOwn(cfg.tiers, tier)) fail('--tier is one of ' + Object.keys(cfg.tiers).join(', '))
 if (a.stop && !cfg.segments.some((s) => s.stop === a.stop)) fail('--stop is one of ' + [...new Set(cfg.segments.map((s) => s.stop))].join(', '))
 const chunkSize = whole('chunk', 600)!
-const keepFrames = a['keep-frames'] === 'true'
-const join_ = a['no-join'] !== 'true'
+const keepFrames = a['keep-frames'] === 'true' || a.frames !== undefined
+const join_ = a['no-join'] !== 'true' && a.frames === undefined
 const crf = whole('crf', 12)!
 const out = resolve(a.out ?? join(WORK, 'capture', format + '-r' + rate + '-' + tier + (a.stop ? '-' + a.stop : '')))
 const frameDir = join(out, 'frames')
 const partDir = join(out, 'parts')
 const fps = cfg.fps * rate
 const captureFrames = cfg.frameCount * rate
+const only: Set<number> | null = a.frames === undefined ? null : new Set(a.frames.split(',').map((t) => Number(t.trim())))
+if (only) {
+  if (only.size === 0 || [...only].some((k) => !Number.isInteger(k) || k < 0 || k >= captureFrames)) fail('--frames is a list of capture frames from 0 to ' + (captureFrames - 1) + ', with commas between them')
+  if (a.stop || a.from !== undefined || a.to !== undefined) fail('--frames stands alone: leave out --stop, --from and --to')
+}
 const range = (() => {
   try {
-    return rangeOf(captureFrames, rate, cfg.segments, a.stop, whole('from', undefined), whole('to', undefined))
+    return rangeOf(captureFrames, rate, cfg.segments, a.stop, only ? Math.min(...only) : whole('from', undefined), only ? Math.max(...only) : whole('to', undefined))
   } catch (e) {
     return fail((e as Error).message)
   }
 })()
-const total = range.to - range.from + 1
+const span = range.to - range.from + 1
+const total = only ? only.size : span
 const filmFile = join(out, a.name ?? 'grand-tour-' + format + '-' + fps + 'fps' + (a.stop ? '-' + a.stop : '') + (total === captureFrames ? '' : '-' + range.from + '-' + range.to) + '.mp4')
 const manifestFile = join(out, 'manifest.json')
 
@@ -71,13 +90,15 @@ const wanted = {
 
 const has = (bin: string): boolean => spawnSync(bin, ['-version'], { stdio: 'ignore' }).status === 0
 const ffmpeg = has(FFMPEG) && has(FFPROBE)
-const chunking = chunkSize > 0 && ffmpeg
-const chunks: Chunk[] = chunksOf(range, chunkSize > 0 ? chunkSize : total)
+const chunking = chunkSize > 0 && ffmpeg && !only
+const chunks: Chunk[] = chunksOf(range, only ? span : chunkSize > 0 ? chunkSize : total)
 
 interface PartNote { name: string; first: number; last: number; frames: number; bytes: number }
+interface ShotNote { frame: number; seconds: number; render: number; bytes: number; warmed: number; firstOfPage: boolean }
 interface Manifest {
+  shutterDegrees: number; expectGpu: string | null; shots?: ShotNote[]
   film: string | null; complete: boolean; frames: number; from: number; to: number; format: string; width: number; height: number; fps: number; filmFps: number; rate: number; tier: string
-  commit: string; engineHash: string; browser: string; graphics: string; machineLimits: Limits | null; filmNeeds: typeof wanted; underNeeds: string[]; machine: string; secondsPerFrame: number | null; renderSecondsPerFrame: number | null; bytesPerFrame: number | null
+  commit: string; engineHash: string; stopsHash?: string; browser: string; graphics: string; machineLimits: Limits | null; filmNeeds: typeof wanted; underNeeds: string[]; machine: string; secondsPerFrame: number | null; renderSecondsPerFrame: number | null; bytesPerFrame: number | null
   framesRendered: number; warmStart: boolean | null; warmDraws: number; framesKept: boolean; crf: number; chunk: number; parts: PartNote[]; started: string; updated: string; note?: string
 }
 
@@ -125,14 +146,15 @@ function serve(root: string): Promise<{ server: Server; url: string }> {
   })
 }
 
-interface PageInfo { frameCount: number; fps: number; format: string; engineHash: string; rate?: number; captureFrames?: number }
+interface PageInfo { frameCount: number; fps: number; format: string; engineHash: string; rate?: number; captureFrames?: number; shutterDegrees?: number }
 interface Open { browser: Browser; page: Page; info: PageInfo; limits: Limits; version: string; warm: boolean; fresh: boolean }
 
 async function openPage(url: string): Promise<Open> {
   const name = a.browser ?? 'chrome'
   const own = name.includes('/') || name.includes('\\')
-  const flags = ['--ignore-gpu-blocklist', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows', '--js-flags=--max-old-space-size=8192']
-  if (process.platform === 'darwin') flags.push('--force_high_performance_gpu')
+  const flags = ['--ignore-gpu-blocklist', '--disable-gpu-watchdog', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows', '--js-flags=--max-old-space-size=8192']
+  if (process.platform === 'darwin' || process.platform === 'win32') flags.push('--force_high_performance_gpu')
+  if (a.angle && a.angle !== 'true') flags.push('--use-angle=' + a.angle)
   if (process.platform === 'linux') flags.push('--no-sandbox', '--disable-dev-shm-usage')
   if (a['allow-software'] === 'true') flags.push('--enable-unsafe-swiftshader')
   let browser: Browser
@@ -143,8 +165,10 @@ async function openPage(url: string): Promise<Open> {
   }
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 })
   page.on('pageerror', (e) => console.error('[page error] ' + e.message))
-  await page.goto(url + '?mode=capture&format=' + format + '&assets=full' + (rate > 1 ? '&rate=' + rate : ''))
-  await page.waitForFunction(() => 'showcase' in window, undefined, { timeout: 300000 })
+  // The first start can be slow (a busy machine, software drawing, or Direct3D building the drawing programs), so the page gets 15 minutes
+  // to load and to start instead of the browser's own 30 seconds. A page that is really dead still ends here with a clear error.
+  await page.goto(url + '?mode=capture&format=' + format + '&assets=full' + (rate > 1 ? '&rate=' + rate : '') + shutterQuery, { waitUntil: 'domcontentloaded', timeout: 900000 })
+  await page.waitForFunction(() => 'showcase' in window, undefined, { timeout: 900000 })
   await page.evaluate(() => (window as unknown as { showcase: { ready: Promise<void> } }).showcase.ready)
   const info = await page.evaluate(() => (window as unknown as { showcase: { info(): PageInfo } }).showcase.info())
   const limits = await page.evaluate((names) => {
@@ -189,6 +213,15 @@ async function shoot(page: Page, k: number, warm: boolean, all: boolean): Promis
   return { seconds: (Date.now() - t0) / 1000, render: r.render, bytes: r.bytes, warmed: r.warmed }
 }
 
+function timed<T>(p: Promise<T>, k: number): Promise<T> {
+  if (frameTimeout <= 0) return p
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const late = new Promise<never>((_, no) => {
+    timer = setTimeout(() => no(new Error('frame ' + k + ' took longer than ' + frameTimeout + ' s (--frame-timeout)')), frameTimeout * 1000)
+  })
+  return Promise.race([p, late]).finally(() => clearTimeout(timer))
+}
+
 function encodePart(c: Chunk): PartNote {
   mkdirSync(partDir, { recursive: true })
   const file = join(partDir, c.name)
@@ -225,12 +258,19 @@ async function main(): Promise<void> {
   const hashes = ensureBuild()
   const old: Partial<Manifest> = existsSync(manifestFile) ? (JSON.parse(readFileSync(manifestFile, 'utf8')) as Partial<Manifest>) : {}
   if (old.format && (old.format !== format || old.rate !== rate || old.tier !== tier) && a.mixed !== 'true') fail('the folder ' + out + ' holds a capture of format ' + old.format + ', rate ' + old.rate + ', tier ' + old.tier + '. Name another folder with --out.')
+  // The engine hash leaves the code of the nine stops out, so a cure inside a stop needs its own check: frames drawn before it are another picture.
+  const stopsHash = createHash('sha256').update(JSON.stringify(Object.entries(hashes.stops).sort())).digest('hex').slice(0, 16)
+  const oldDrawn = (old.framesRendered ?? 0) > 0 || (old.parts ?? []).length > 0
+  if (oldDrawn && old.stopsHash !== stopsHash && a.mixed !== 'true') fail('the folder ' + out + ' holds frames drawn before a change to the code of a stop (stops ' + (old.stopsHash ?? 'not recorded, so drawn by an older tool') + ', now ' + stopsHash + '). Name another folder with --out, or remove the folder, or pass --mixed if the Builder wrote that the frames that are there stay good.')
   if (old.complete && old.film && old.from === range.from && old.to === range.to && old.engineHash === hashes.engine && existsSync(old.film)) {
     console.log('capture: the film is already there: ' + old.film + '. Remove the folder ' + out + ' to capture it again.')
     return
   }
+  const oldShutter = old.format ? (old.shutterDegrees ?? filmShutter) : undefined
+  if (oldShutter !== undefined && oldShutter !== shutter && a.mixed !== 'true') fail('the folder ' + out + ' holds frames drawn with the shutter open for ' + oldShutter + ' degrees of a capture frame, this run asks for ' + shutter + '. Name another folder with --out, or remove that one.')
   if (old.engineHash && old.engineHash !== hashes.engine && a.mixed !== 'true') fail('the folder ' + out + ' holds frames of another state of the film (engine ' + old.engineHash + ', now ' + hashes.engine + '). Name another folder with --out, or remove this one, or pass --mixed to go on in it.')
   const m: Manifest = {
+    stopsHash, shutterDegrees: shutter, expectGpu: a['expect-gpu'] !== undefined && a['expect-gpu'] !== 'true' ? a['expect-gpu'] : null, ...(only ? { shots: (old.shots ?? []).filter((t) => only.has(t.frame)) } : {}),
     film: null, complete: false, frames: total, from: range.from, to: range.to, format, width: size.width, height: size.height, fps, filmFps: cfg.fps, rate, tier, commit: commit(), engineHash: hashes.engine,
     browser: old.browser ?? '', graphics: old.graphics ?? '', machineLimits: old.machineLimits ?? null, filmNeeds: wanted, underNeeds: [], machine: machineId(), secondsPerFrame: old.secondsPerFrame ?? null, renderSecondsPerFrame: old.renderSecondsPerFrame ?? null, bytesPerFrame: old.bytesPerFrame ?? null,
     framesRendered: old.framesRendered ?? 0, warmStart: old.warmStart ?? null, warmDraws: old.warmDraws ?? 0, framesKept: keepFrames || !chunking, crf, chunk: chunking ? chunkSize : 0, parts: (old.parts ?? []).filter((p) => chunks.some((c) => c.name === p.name)), started: old.started ?? new Date().toISOString(), updated: new Date().toISOString(),
@@ -256,7 +296,7 @@ async function main(): Promise<void> {
     }
     m.parts = m.parts.filter((p) => p.name !== c.name)
     const frames: number[] = []
-    for (let k = c.first; k <= c.last; k++) if (!wholePng(join(frameDir, frameName(k)), size.width, size.height)) frames.push(k)
+    for (let k = c.first; k <= c.last; k++) if ((!only || only.has(k)) && !wholePng(join(frameDir, frameName(k)), size.width, size.height)) frames.push(k)
     left += frames.length
     todo.push({ chunk: c, frames })
   }
@@ -291,11 +331,20 @@ async function main(): Promise<void> {
       await close()
       fail('this build of the film has no capture rate ' + rate + ' (the page reports ' + (o.info.rate ?? 'none') + '). Update the code, or pass --rate 1 for the film at ' + cfg.fps + ' frames a second.')
     }
+    if (shutterQuery && o.info.shutterDegrees !== shutter) {
+      await close()
+      fail('the page holds the shutter open for ' + (o.info.shutterDegrees ?? 'an unknown number of') + ' degrees, the tool asked for ' + shutter + '. Update the code.')
+    }
     if ((o.info.captureFrames ?? o.info.frameCount * (o.info.rate ?? 1)) !== captureFrames) {
       await close()
       fail('the page counts ' + (o.info.captureFrames ?? o.info.frameCount) + ' frames, the tool ' + captureFrames)
     }
     const g = o.limits
+    // The same film comes out differently under Direct3D, OpenGL and Vulkan (report of the RTX 5080, 2026-11-27), so frames of two do not go into one film without a word.
+    if (old.graphics && old.graphics !== g.renderer && (total - left > 0 || m.parts.length > 0) && a.mixed !== 'true') {
+      await close()
+      fail('the folder ' + out + ' holds frames drawn on "' + old.graphics + '", and this run draws on "' + g.renderer + '". Frames of two graphics do not go into one film. Name another folder with --out, or remove the folder, or pass --mixed if both are meant to be joined.')
+    }
     if (m.graphics !== g.renderer || m.browser !== o.version) {
       console.log('capture: browser ' + o.version)
       console.log('capture: this machine: ' + g.renderer + '; largest texture ' + g.maxTextureSize + ', largest render buffer ' + g.maxRenderbufferSize + ', largest viewport ' + g.maxViewportDims.join(' by ') + ', point sizes ' + g.aliasedPointSizeRange.join(' to ') + ', ' + g.maxSamples + ' samples.')
@@ -314,6 +363,12 @@ async function main(): Promise<void> {
       await close()
       fail('the browser draws without the graphics card (' + g.renderer + '). In Chrome open Settings, System, switch on "Use graphics acceleration when available" and start Chrome again; chrome://gpu shows what it uses. To run like this anyway pass --allow-software.')
     }
+    const expect = m.expectGpu
+    if (expect !== null && !g.renderer.toLowerCase().includes(expect.toLowerCase())) {
+      await close()
+      write()
+      fail('the browser draws on "' + g.renderer + '", and that name does not hold "' + expect + '" (--expect-gpu). The run is stopped so that no frame is drawn on other graphics than the named card. On Windows: Settings, System, Display, Graphics, add Google Chrome and choose High performance; plug the screen into the graphics card and not into the mainboard; start the run again. chrome://gpu shows what Chrome uses.')
+    }
     return o
   }
 
@@ -327,7 +382,8 @@ async function main(): Promise<void> {
         for (let attempt = 1; ; attempt++) {
           try {
             const o = await ready()
-            const shot = await shoot(o.page, k, o.warm, o.fresh)
+            const shot = await timed(shoot(o.page, k, o.warm, o.fresh), k)
+            if (only) m.shots = [...(m.shots ?? []).filter((t) => t.frame !== k), { frame: k, seconds: Number(shot.seconds.toFixed(3)), render: Number(shot.render.toFixed(3)), bytes: shot.bytes, warmed: shot.warmed, firstOfPage: o.fresh }]
             o.fresh = false
             m.warmStart = o.warm
             m.warmDraws += shot.warmed
@@ -342,7 +398,7 @@ async function main(): Promise<void> {
               console.log('capture: the first frame took ' + shot.seconds.toFixed(1) + ' s (' + shot.render.toFixed(1) + ' s to render) and is ' + (shot.bytes / 1e6).toFixed(1) + ' MB. At that pace ' + left + ' frames take about ' + clock(shot.seconds * left) + ' and the frames on disk at one time about ' + ((shot.bytes * perChunk) / 1e9).toFixed(1) + ' GB; ' + freeGb(out).toFixed(0) + ' GB are free.')
               if ((shot.bytes * perChunk) / 1e9 > freeGb(out)) console.log('capture: WARNING: that is more than the free disk. Use a smaller --chunk, or another disk with --out.')
             }
-            if (sinceStart % 10 === 0 || done === total) {
+            if (sinceStart % 10 === 0 || done === total || only) {
               const pace = (Date.now() - startedAt) / 1000 / sinceStart
               console.log('capture: frame ' + k + ', ' + done + ' of ' + total + ', ' + pace.toFixed(1) + ' s a frame, about ' + clock(pace * (total - done)) + ' left')
               write()
@@ -383,7 +439,7 @@ async function main(): Promise<void> {
     for (const c of chunks) if (!m.parts.some((p) => p.name === c.name && p.frames === c.frames)) missing.push(c.first)
     if (m.parts.reduce((n, p) => n + p.frames, 0) !== total) missing.push(-1)
   } else {
-    for (let k = range.from; k <= range.to; k++) if (!wholePng(join(frameDir, frameName(k)), size.width, size.height)) missing.push(k)
+    for (let k = range.from; k <= range.to; k++) if ((!only || only.has(k)) && !wholePng(join(frameDir, frameName(k)), size.width, size.height)) missing.push(k)
   }
   if (missing.length > 0) {
     console.error('capture: the count is wrong: ' + missing.length + (chunking ? ' parts' : ' frames') + ' are missing or not whole (first ' + missing[0] + '). Run the same command again.')

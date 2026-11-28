@@ -160,9 +160,9 @@ const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
 export const FALL_GLSL = /* glsl */ `vec3 fallGrade(vec3 colour, vec3 pivot, vec3 power, float blueMost) {
   vec3 c = max(colour, vec3(0.0));
   vec3 x = c / pivot;
-  vec3 own = pivot * mix(pow(x, power), x, smoothstep(0.6, 1.2, x));
+  vec3 own = pivot * mix(pow(abs(x), power), x, smoothstep(0.6, 1.2, x));
   float level = max(x.g, 1e-6);
-  vec3 by = max(mix(pow(vec3(level), power), vec3(level), smoothstep(0.6, 1.2, level)) / level, vec3(1e-9));
+  vec3 by = max(mix(pow(abs(vec3(level)), power), vec3(level), smoothstep(0.6, 1.2, level)) / level, vec3(1e-9));
   float whiteAt = pivot.b / pivot.r;
   float hue = clamp((whiteAt - x.r / max(x.b, 1e-6)) / max(whiteAt - 1.0, 1e-6), 0.0, 1.0);
   vec3 led = c * pow(by, vec3(hue)) * pow(by.g, 1.0 - hue);
@@ -184,10 +184,18 @@ vec3 turnAbout(vec3 d, vec3 axis, float a) {
   float c = cos(a), s = sin(a);
   return d * c + cross(axis, d) * s + axis * dot(axis, d) * (1.0 - c);
 }
-vec3 knot(vec3 k[${KNOTS}], float ndl) {
+// The light curves by the Sun's angle. Each reads its own uniform array where it lives. An array handed to a function as a
+// parameter is drawn wrong by Direct3D (Chrome on Windows): the value between two knots is held at the lower knot and the
+// terminator comes out in hard steps (handoff/reports/windows-rtx5080.md). The sums are the same as before, to the bit.
+vec3 knotDeck(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${KNOTS - 1}.0;
   int i = int(min(floor(x), ${KNOTS - 2}.0));
-  return mix(k[i], k[i + 1], x - float(i));
+  return mix(uDeck[i], uDeck[i + 1], x - float(i));
+}
+vec3 knotCloud(float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${KNOTS - 1}.0;
+  int i = int(min(floor(x), ${KNOTS - 2}.0));
+  return mix(uCloud[i], uCloud[i + 1], x - float(i));
 }
 float stormTurn(vec3 d) {
   float ang = acos(clamp(dot(d, uStormAxis), -1.0, 1.0)) / uStormRadius;
@@ -249,7 +257,7 @@ float eyeShade(vec3 p, float field) {
 // close image has 10 34 67 on 90 139 184): a deep deck loses its red first and its blue last. All 1: the one share, to the bit.
 vec3 eyeDark(vec3 p, float field) {
   float s = eyeShade(p, field);
-  return any(notEqual(uEyeHue, vec3(1.0))) ? pow(vec3(s), uEyeHue) : vec3(s);
+  return any(notEqual(uEyeHue, vec3(1.0))) ? pow(abs(vec3(s)), uEyeHue) : vec3(s);
 }
 vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
   float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
@@ -545,14 +553,14 @@ ${FALL_GLSL}void main() {
     float fineRel = clamp(dot(deckTexel.rgb, lum) / max(dot(mid.rgb, lum), 1e-4), 0.5, 1.7);
     float thread = textureGrad(uFlowMap, fq, fx, fy).r - 0.5;
     float calm = 1.0 - uEndPole.z * polar;
-    albedo *= mix(1.0, mix(1.0, mix(pow(rel, uEndStruct.x), 1.0, polar), uEndNight.x) * pow(fineRel, uEndStruct.y * calm) * (1.0 + uEndStruct.z * calm * thread), dark);
-    shade = mix(1.0, (uEndShine.x + uEndShine.y * smoothstep(uEndShine.z, uEndShine.w, dot(n, uEndRingN))) * pow(mu, uEndNight.w), dark);
+    albedo *= mix(1.0, mix(1.0, mix(pow(abs(rel), uEndStruct.x), 1.0, polar), uEndNight.x) * pow(abs(fineRel), uEndStruct.y * calm) * (1.0 + uEndStruct.z * calm * thread), dark);
+    shade = mix(1.0, (uEndShine.x + uEndShine.y * smoothstep(uEndShine.z, uEndShine.w, dot(n, uEndRingN))) * pow(abs(mu), uEndNight.w), dark);
     float own = clamp(dot(deckTexel.rgb, lum) / max(dot(wide, lum), 1e-4), 0.4, 1.8);
     detail = mix(1.0, own, uEnd.x * uEndBreak.y);
-    albedo *= mix(1.0, pow(own, uEndBoost.x), uEnd.x - dark);
+    albedo *= mix(1.0, pow(abs(own), uEndBoost.x), uEnd.x - dark);
     alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
   }
-  vec3 deck = albedo * eyeDark(p, 0.0) * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
+  vec3 deck = albedo * eyeDark(p, 0.0) * knotDeck(ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
   for (int k = 0; k < (shown.a > 0.0 ? 1 : 0); k++) {
     vec3 plate = min(shown.rgb / shown.a * exp2(uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
     vec3 seen = inverseFilmic(plate) / (uNearTint.rgb * uNear.y);
@@ -562,11 +570,11 @@ ${FALL_GLSL}void main() {
     deck = mix(deck, mix(vec3(grey), seen, (want > uVivid.x ? got / want : 1.0) / uNear.w) / uTint, shown.a);
   }
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
-  vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+  vec3 col = mix(deck, knotCloud(ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   for (int k = 0; k < (uDistant.x > 0.0 ? 1 : 0); k++) {
     vec4 coarse = textureLod(uMap, fq, uDistant.w);
-    vec3 soft = mix(coarse.rgb / uCode * knot(uDeck, ndd), knot(uCloud, ndlc), min(coarse.a, 1.0) * (1.0 - placed) * keep * smoothstep(-0.09, -0.03, ndlc)) * uTint;
-    col = mix(col, mix(soft, uDistantAir.rgb * knot(uCloud, ndlc) * uTint, uDistantAir.a), uDistant.x * (1.0 - smoothstep(uDistant.y, uDistant.z, mu)));
+    vec3 soft = mix(coarse.rgb / uCode * knotDeck(ndd), knotCloud(ndlc), min(coarse.a, 1.0) * (1.0 - placed) * keep * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+    col = mix(col, mix(soft, uDistantAir.rgb * knotCloud(ndlc) * uTint, uDistantAir.a), uDistant.x * (1.0 - smoothstep(uDistant.y, uDistant.z, mu)));
   }
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
     vec3 nearCol = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, uNear.w);
@@ -593,7 +601,7 @@ ${FALL_GLSL}void main() {
   col = col * exp(-sky.a * uExtinction * uAirGround) + sky.rgb * uAirGround;
   float dw = smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
   float dm = 0.6 + 0.4 * dw;
-  col *= 1.0 - uLimbDark.x * pow(dw, 0.7) * (1.0 - smoothstep(uLimbDark.y * dm, uLimbDark.z * dm, mu));
+  col *= 1.0 - uLimbDark.x * pow(abs(dw), 0.7) * (1.0 - smoothstep(uLimbDark.y * dm, uLimbDark.z * dm, mu));
   // The held field lies on the body. In the hold it is read by the eye's own angle to the ground (mu). From the dive's first moment
   // on it is read by the angle of the eye the dive began at, which is carried with the body (uFieldEye: its place from the body's
   // middle in the world's axes; w says that it is set): every point of the ground keeps the share the hold gave it, so the field's
