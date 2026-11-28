@@ -7,6 +7,7 @@ import patches from './patches.json'
 import { ground } from './band'
 import { FALL_GLSL, MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
 import { COUNT_GLSL } from './count'
+import { ownTrig } from './trig'
 
 // The surface view of Neptune as one scene made by functions: a cloud deck with height (rolls, the storm as a bowl with walls and arms),
 // cirrus as a volume above it that is marched and lit by a march toward the Sun (the same density casts the shadow on the deck), a wind
@@ -1429,6 +1430,7 @@ export class Deep {
         uDiag: diagUniform,
       },
     })
+    ownTrig(this.material)
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius + h.top, laid ? 256 : 128, laid ? 128 : 96), this.material)
     this.mesh.frustumCulled = false
     if (laid) {

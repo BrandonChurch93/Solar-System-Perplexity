@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { HAZE_GLSL } from '../../bodies/haze'
 import type { Ending } from './ending'
+import { ownTrig } from './trig'
 
 export const AIR_LAYERS = 3
 
@@ -230,6 +231,7 @@ export class Air {
       transparent: true,
       depthWrite: false,
     })
+    ownTrig(this.material)
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(params.top, 192, 96), this.material)
     this.mesh.renderOrder = 5
     this.aims = params.layers.map((l) => vec(l.aim))

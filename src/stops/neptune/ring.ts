@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import type { Ending } from './ending'
 import { diagUniform } from '../../diagnostics/diag'
+import { ownTrig } from './trig'
 
 export interface RingParams {
   normal: [number, number, number]
@@ -151,6 +152,7 @@ export class Ring {
       transparent: true,
       depthWrite: false,
     })
+    ownTrig(this.material)
     this.mesh = new THREE.Mesh(new THREE.RingGeometry(p.inner, p.outer, 512, 2), this.material)
     this.tilt.setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3().fromArray(p.normal).normalize())
     this.mesh.quaternion.copy(this.tilt)

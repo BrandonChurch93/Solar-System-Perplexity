@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import { ownTrig } from './trig'
 
 export interface TritonParams {
   map: THREE.Texture
@@ -87,6 +88,7 @@ export class Triton {
         uDiag: diagUniform,
       },
     })
+    ownTrig(this.material)
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 64), this.material)
     this.mesh.scale.setScalar(p.radius)
   }

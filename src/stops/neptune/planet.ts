@@ -5,6 +5,7 @@ import { AIR_GLSL, airUniforms, type AirParams } from './air'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import { ownTrig } from './trig'
 
 export const KNOTS = 33
 export const MAX_LEVELS = 8
@@ -715,6 +716,7 @@ export class NeptunePlanet {
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
+    ownTrig(this.material)
     const seg = o.segments ?? 320
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
     this.material.uniforms.uEnd = { value: new THREE.Vector3(0, 0, 0.2) }
