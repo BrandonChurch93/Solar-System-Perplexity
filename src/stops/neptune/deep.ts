@@ -995,8 +995,9 @@ void main() {
     float slabShare = max(1.0 - 1.0 / max(slabFeet, 1e-6), 0.0);
     float slabSum = 0.0;
     for (int j = 0; j < 8; j++) {
-      if (float(j) >= uSlab.x) break;
-      slabSum += layerAt(normalize(dcl + slabRun * (slabShare * (float(j) + 0.5) / uSlab.x)), softCloud * max(slabFeet, 1.0), 0.0, tx).a;
+      if (float(j) < uSlab.x) {
+        slabSum += layerAt(normalize(dcl + slabRun * (slabShare * (float(j) + 0.5) / uSlab.x)), softCloud * max(slabFeet, 1.0), 0.0, tx).a;
+      }
     }
     mapCloud = slabShare > 0.0 && uSlab.x > 0.5 ? slabSum / uSlab.x : mapCloud;
     float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);

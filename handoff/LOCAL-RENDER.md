@@ -74,7 +74,7 @@ node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "RTX 5080
 - `--angle` is an allowed flag of the test and of the render (`--angle d3d11`, `--angle gl`, `--angle vulkan`). The render always gets exactly the flags of the test that passed.
 - The test now empties its own draw folders (`out/work/capture-check/preview`, `master` and `uhd`) before it draws. Frames of an earlier test, drawn under another backend or before a cure, can no longer be measured as if they were new. Never pass `--keep-frames` to the test here: with it the verdict cannot be PASS.
 - The first test after a cure builds the film's page again, which takes a minute or two. The whole test took you about 8 minutes under Direct3D 11.
-- The engine hash stays `a455bc02904b0d42`. The cure lies in the code of two stops, Neptune and Saturn, and that hash leaves the stops out.
+- The engine hash stays `a455bc02904b0d42`. Both cures lie in the code of stops (the first in Neptune and Saturn, the second in Neptune alone), and that hash leaves the stops out.
 
 ### W5. The verdict is not PASS
 
@@ -82,6 +82,7 @@ Start no render and leave `src/` alone. Push to the branch `local-render-report`
 
 - `REPORT.md` and `report.json` from `out/work/capture-check/`, under names that begin with the first seven characters of the tested commit (`git rev-parse --short=7 HEAD`), for example `1a2b3c4-REPORT.md`.
 - The side by side pictures of every frame named under "Verdict", and in any case those of the Neptune frames (preview 9400 and 9401, master 9090, 9480, 9720 and 9916, uhd 9480 and 9916) and of the Sun frames (master 180 and 396, uhd 396), with the same seven characters in front, for example `1a2b3c4-d3d11-master-009480.jpg`. The older pictures on the branch stay.
+- The frames of the test themselves as the tool drew them, at full size and unchanged (copy the files, convert nothing). From `out/work/capture-check/master/frames/` the files `009480.png`, `009720.png` and `009916.png`, from `out/work/capture-check/uhd/frames/` the files `009480.png` and `009916.png`, and the frame of every other line named under "Verdict". Put them into `handoff/reports/windows-rtx5080/full/` under names like `1a2b3c4-master-009480.png` and `1a2b3c4-uhd-009916.png`. No file may be larger than 95 MB; a 4K frame has about 10 to 30 MB. The half size side by side pictures cannot show fine grain, and the Builder judges these frames at full size.
 - Your findings at the top of `handoff/reports/windows-rtx5080.md`, under a heading with the commit and the time: the graphics name, the table of the frames, what you see in each picture, and the full text under "Verdict".
 
 Then go on with the watch (W2) if you have that order. Without it, tell Brandon in one line that the report is on the branch.
@@ -139,6 +140,19 @@ Then set sleep and the display timer back to the old values (A6) and tell Brando
 - The Sun frames have their own limit in the test. Master 180 and 396 and uhd 396 pass from 30.5 dB and SSIM 0.90 on, where every other frame needs 34 dB and 0.93. You measured 32.57, 31.49 and 31.68 dB there and judged them "same picture". The Builder looked at your pictures and agrees: the same Sun at the same brightness, with only its fine moving grain falling differently on a graphics card. This limit is the Builder's judgement. It is shown to Brandon, who can still say no.
 - The capture tool has two new guards. It stops when its folder holds frames drawn before a change to the code of a stop, and when the folder holds frames drawn under another graphics name. Both name `--mixed` as the way around them; do not use it on this run.
 - No render had started when this commit was made (your message of 9:50 PM Mountain Time on 2026-11-27). Should frames of a render from before this commit exist all the same, do not continue that render: its Saturn and Neptune frames are faulty and the others are good. Report it on the branch. The Builder then names the parts to draw again, and the finished parts of the other stops are kept.
+
+### What the second cure changed (the CURE commit of the night of 2026-11-27 to 28, Mountain Time), and what only your test can prove
+
+Your test of the first cure (commit `9365ac1`, 10:50 PM Mountain Time) ended with LOOK. It proved the first cure: the stepped edge is gone (master 9090, preview 9400 and 9401), the black blobs are gone, and the Sun frames pass. Five lines stayed under SSIM 0.93, all of them Neptune inside the clouds: master 9480, 9720 and 9916, uhd 9480 and 9916. This commit cures one cause of them.
+
+- Neptune, the fine ripples in the haze at the limb (9480) and their weaker trace in 9720 and 9916. Chrome translates each shader for Direct3D. Where a loop holds a `break` under an `if`, that translation writes every screen derivative inside the loop as zero. One loop of Neptune's cloud shader was of this kind: it adds up the cloud slab, and the function it calls uses a screen derivative to smooth its finest detail. With the derivative at zero the smoothing is off and the detail shows as ripples. The loop now always runs its 8 turns and tests the count inside, without `break` (`src/stops/neptune/deep.ts`, three lines in place of two).
+- The cause is MEASURED in the cloud: with the derivative forced to zero in that one place, the software drawing of the cloud shows your ripples. Compared pixel by pixel with your pictures, the ripple pattern agrees with a correlation of 0.83 to 0.89 at 9480, and of 0.93 to 0.94 inside the affected parts of 9720 and 9916.
+- That Direct3D keeps the derivative in the new form is the Builder's reading of the translator's source and not a measurement, because the cloud cannot draw under Direct3D. Your test proves or refutes it.
+- It was the only loop of this kind: the Builder read the shader text of every program of the Neptune stop as the browser receives it and found no second one.
+- The approved picture stays as it is: MEASURED in the cloud, the cured code draws the frames 9480, 9720 and 9916 bit for bit as the code before it.
+- The engine hash stays `a455bc02904b0d42`. The code of the Neptune stop has changed, so the capture tool's guard refuses frames of that stop drawn before this commit. No render had started, so nothing is lost.
+- The limits of the test are unchanged. No Neptune frame has its own limit.
+- What the Builder expects, said openly: the ripples at 9480 go. Master 9720 and master and uhd 9916 will probably stay under SSIM 0.93 all the same, because the ripples hold only a small part of their distance: by the test's own measure the fault costs 0.006 to 0.008 SSIM there, and you measured 0.9209 and 0.8977. The rest is a softer and grainier cloud deck whose cause is not known yet. So expect LOOK once more. Then W5 holds, and the full size frames it now asks for are what the Builder needs to find that cause or to judge it. A third CURE commit follows; keep the watch.
 
 ## The MacBook Pro run: the whole film, nobody waiting
 
