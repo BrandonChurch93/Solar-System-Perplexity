@@ -13781,3 +13781,15 @@ H60 neptune_builder p3
   and h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p3 01:26:30 chunks 2 left 6
   failed 0 next: jupiter.dive 3025-3026 list: # neptune_builder v1". The last wrote line of the log: "wrote
   ending.lookback.part000.mp4 frames 5265-5294 render 1370 s encode 4.8 s". Delivered true.
+
+## 28 Nov, 02:46 UTC: H60 pack p4 to the Builder (word for word; sent 02:46:08 at the latest; high priority; attached /tmp/h60-neptune_builder-p4.tar and /tmp/h60-neptune_builder-p4.txt; nothing else in it)
+
+H60 neptune_builder p4
+
+- The tar: 266240 bytes, sha256 0e11e1858ab73d984f3b92789fd3934d137efc1a4d565894c4bab30723313086; it holds
+  jupiter.dive.span3025-3026.mp4 (123803 bytes), jupiter.dive.span3027-3028.mp4 (124815 bytes), each with its .json, and
+  h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p4 02:46:01 chunks 2 left 4
+  failed 0 next: jupiter.dive 3029-3030 list: # neptune_builder v1". The last wrote line of the log: "wrote
+  jupiter.dive.part000.mp4 frames 3027-3028 render 2405 s encode 0.7 s". Delivered true. About 02:40 my session paused
+  and came back; the loop and my wait had run on by themselves, no pack was missed (p0 to p3 sent before, p4 stood at
+  02:46:01).
