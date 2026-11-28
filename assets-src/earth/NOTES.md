@@ -8636,3 +8636,13 @@ If the loop is not running (the second number is 0), start it again as the H60R 
 - Loop pid 11008 alive; drawing now mercury.dive 775-775 (began 08:54:46); free disk 5902 MB.
 - Note for the watch: my check script lists only the last four .done files in name order, so from p10 on they sort before p2 and do not show in that list; I read the .done, .tar and .txt of each pack by name before sending.
 - Sent so far: b0, p0 to p10. Next to send: p11 (waiter `bash /tmp/h60r-wait.sh 11`).
+
+### 09:49 UTC, 28 Nov: job H60R, pack p11 sent
+
+- 08:55:22: the first push of the p10 notes commit 4106f483 ended with "fatal: could not read Username for 'https://github.com'" (rc 128); the second try at 08:55:31 went through and the remote read back 4106f483a1d7afb137be3af755967e6c9febfa0d. Loop, drawing and waiter were alive after it (checked 08:55:38).
+- 09:22:09: mercury.dive 775-775 done ("wrote mercury.dive.part000.mp4 frames 775-775 render 1622 s encode 0.7 s", RC film 0).
+- 09:49:33: mercury.dive 776-776 done ("wrote mercury.dive.part000.mp4 frames 776-776 render 1624 s encode 0.8 s", RC film 0).
+- 09:49:34: /tmp/h60-earth_builder-p11.done appeared. Sent to /root at 09:49:49 with the text `H60 earth_builder p11` and the two files attached (tar 266240 bytes: mercury.dive.span775-775.mp4 and .json, mercury.dive.span776-776.mp4 and .json, h60r-state.txt).
+- First line of p11.txt: 0. Second line: "PACK earth_builder p11 09:49:34 chunks 2 left 7 failed 0 next: mercury.dive 777-777 list: # earth_builder v1".
+- Loop pid 11008 alive; drawing now mercury.dive 777-777 (began 09:49:34); free disk 5900 MB.
+- Sent so far: b0, p0 to p11. Next to send: p12 (waiter `bash /tmp/h60r-wait.sh 12`).
