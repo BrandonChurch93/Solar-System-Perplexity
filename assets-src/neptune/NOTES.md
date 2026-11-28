@@ -14519,3 +14519,257 @@ H60 neptune_builder p8
   its PACK line: "PACK neptune_builder p8 08:59:23 chunks 1 left 6 failed 0 next: mercury.hold 568-569 list: #
   neptune_builder v1". The last wrote line of the log: "wrote mercury.hold.part000.mp4 frames 568-569 render 1589 s
   encode 0.8 s". Delivered true. The loop ran beside the VSTRIP draws (pid 24747); disk 4.8 GB free.
+
+## 28 Nov, 08:14 to 10:37 UTC: VSTRIP (the strip of false stars the Windows PC draws), beside the running film loop
+
+- This piece holds the mails of the Builder from 08:14 to 10:34 and my answers, word for word, in the order of my clock:
+  the saved time of each mail of the Builder, the sent time of each answer of mine. The pictures, tables and scripts the
+  answers name as attached lie under /tmp/vs (mail, mail2) and are not in the repo.
+- All VSTRIP work is done in clean exports of main 0562a78 under /tmp/vs, in software. No file of the repo tree was
+  changed, src is untouched on every branch, nothing was pushed but this notebook, nothing went to main.
+- Where it stands at 10:37: VSTRIP 1, VSTRIP P and VSTRIP P2 are answered. Open is VSTRIP P3 (points 3 to 5 of the
+  Builder's 09:12 mail): the cure candidate proven byte equal in software with its cost, and the full list. Measured so
+  far for it: cure candidate A (the read texture(uBand, bc.xy, plan.y) taken once before the k loop of sky.ts) gives the
+  same sha256 as the unchanged draw at tier draft, preview, for all six preview captures of the PC's test. The draw at
+  tier final of capture 2200 has been running since 10:11. The list is made (tool /tmp/vs/audit2.py).
+- A red of mine, found 10:34 and to be named in P3: VSTRIP P2 says the PC's picture of capture 2200 takes 16 samples.
+  The repo's own tool (tools/samples.ts --tier final --frames 2200, run in the clean export) prints 64 for 2200 and 2201
+  and 16 for 4880, 4881, 9400, 9401: mercury.travel is a fast kind. No measured number of P2 rests on the 16.
+- The film loop ran on beside it (pid 24747, started 08:01:01). H60 MOVE took the last line, sun.travel 532-532, off my
+  list at 10:36; that piece was neither being drawn nor on my disk. Pack p9 came 10:36:11 and went out 10:37:09 (next
+  piece of this notebook).
+
+## VSTRIP from the Builder (/root) (saved 08:14:31 by my clock, 28 Nov, shortly after it came; word for word; high priority). In two of its code lines an exclamation character stands before a bracket; this notebook writes [mark] for it. The mail came with &gt; and &lt; as written here. The most urgent job now: the strip of false stars the Windows PC draws at the left edge of the Venus whole view under OpenGL and Vulkan (tests T0 to T3).
+
+> VSTRIP from the Builder (/root). New job, the most urgent one now. Brandon wants Vulkan opened on the Windows PC (RTX 5080), and one fault stands in the way: under OpenGL and under Vulkan the PC draws a strip of false stars at the left edge of the Venus whole view (capture frames 2200 and 2201 at 60 fps, which is film frame 1100, preview size 960x540). Not under Direct3D 11, not in software.
+> The pictures: branch local-render-report of https://github.com/BrandonChurch93/Solar-System-Perplexity, files handoff/reports/windows-rtx5080/vulkan-preview-002200.jpg and gl-preview-002200.jpg (1920x540: left half approved, right half the PC). The strip is about 90 px wide at the left edge of the 960 px frame and runs from top to bottom, across the band of the Milky Way. In it lie several hundred white points, each 1 px, all equally bright, set like a real star field with gaps.
+> What I read in src/space/sky.ts of main 0562a78: three point programs, STAR_VERT (line 501), DEEP_VERT (576) and STRIP_VERT (604), all with the fragment program STAR_FRAG (553). STAR_FRAG divides by size * size twice (glow and edge). No program sets a lower or upper bound on gl_PointSize. The strip stars (this.strip, line 1001) are only visible while swap &gt; 0 (line 1421), their exposure is exposure * glow * flightSwap(swap, lead) (line 1416), so right after the flight from Mercury to Venus they are in the tail of a fade.
+> My first hypothesis H1: in that tail the size of some points is exactly 0 or so small that size * size underflows (size = min(x + y * log2(1.0 + c), z) * uPixel with c below 6e-8 gives log2(1.0) = 0). NVIDIA's own drivers (OpenGL, Vulkan) lift gl_PointSize to 1 px and draw the point; STAR_FRAG then computes 0 / 0 = NaN and the pixel ends white. Direct3D and the software renderer either do not draw such a point or end the NaN as black. Second hypothesis H2: a NaN or an infinite value already in vColor or in size of the vertex program for the stars of one region (candidates: region in STRIP_VERT from textureLod at a low level, pow with a zero base, smoothstep with equal edges in sunFade or patchCoord, a division by uPatchLens of a patch that is off), which min, max, clamp and mix treat differently on NVIDIA.
+> Work in a clean export of main 0562a78, in software, at preview size, capture frame 2200. Never push, never touch main. Do these in this order and mail each result as soon as you have it (titles VSTRIP 1, VSTRIP 2 and so on), numbers in the mail, pictures as PNG attachments:
+> T0. Draw frame 2200 unchanged. Give its sha256. Give the values at that frame of these uniforms of each of the three point materials: uPixel, uExposure, uLift, uStripSize, uDeepSize, uStripStar, uBandGrade, uFlightBand, uFlightLook, uPatchLens, uPatchMode, uSunSpot, uSunHalf, uStarLaw, uCore, uHalo; the visible flag of stars, deep and strip; the draw count of each; and gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE) of the software renderer.
+> T1. Markers in the three vertex programs, after the size is known: if ([mark](size * size &gt; 1e-30)) then gl_PointSize = 3.0, vSize = 3.0 and vColor = a strong marker colour (STAR magenta vec3(8.0, 0.0, 8.0), DEEP cyan vec3(0.0, 8.0, 8.0), STRIP yellow vec3(8.0, 8.0, 0.0)). Draw. Say how many marked points of each program are in the frame, their x range, and lay the picture beside the right half of the PC's Vulkan picture: do the marked points sit where the PC's false stars sit?
+> T2. The emulation of NVIDIA: no markers, but gl_PointSize = max(size, 1.0) in the three vertex programs while vSize keeps the unchanged size. Draw. Do points appear in the strip, white or black? Count the pixels that differ from T0 and give their x range.
+> T3. Only if T1 marks nothing: mark points whose vColor has a component that is NaN or infinite (test with [mark](abs(v) &lt; 1e30), not with isnan alone) or whose size is larger than 1023.0, forced to gl_PointSize 3.0, in other marker colours. Same report. Then narrow down which term turns NaN first.
+> T4. If T1 or T2 shows the cause: try this cure in STAR_FRAG only: float s2 = max(size * size, 1e-30); and use s2 in both divisions. Draw frame 2200 unchanged in software with it: must be the same bytes as T0. Then the emulation of T2 on top of it: the strip must be gone. Also draw two frames of other stops in software with the cure and compare the bytes with main (capture 9480 at master size and capture 180 at master size, if your machine has the memory; else at preview size).
+> Say for each number whether you measured it. If something cannot be done, say so in the mail instead of leaving it out. First mail as soon as T0 and T1 are done.
+
+## 28 Nov, 08:42 UTC: VSTRIP 1 (T0 and T1) to the Builder (word for word; sent 08:42:08 at the latest; high priority; attachments as its text names them)
+
+VSTRIP 1 (T0 and T1). Short answer: T1 marks nothing. In software no point of any point program in capture 2200 has a size whose square is 1e-30 or less (or NaN), so H1 does not show here. T2 and T3 are drawing now.
+
+HOW I DREW (all MEASURED unless marked)
+- Clean export of main 0562a78 (src, tools, config equal to the export file for file), software (ANGLE on SwiftShader, Chromium 147.0.7727.15), preview 960 by 540, capture 2200, rate 2. Nothing pushed, no file of the repo tree changed, all work under /tmp/vs.
+- The plain T0 was drawn with the export's own capture tool. The runs that take an init script use that tool plus one line (167: page.addInitScript of the file named in DUMP_FILE); nothing else differs.
+- TIER: draft (one sample a frame), not final. This is a limit you must know. I tried final twice: the first try my own memory guard stopped at 66 s; the second ran 10 min 19 s and had no picture yet (the film loop runs beside it and takes most of the 4 cores; you did not tell me to stop it, so it stays). A final draw first draws one warm frame of the stop at final, which is the slow part. At draft one draw takes 204 to 214 s. So every number below is of tier draft. NOT DONE YET: the sha256 of T0 at tier final. I draw it after the diagnosis, unless you write that draft is enough.
+- A fourth point program exists that your mail does not name: this.flight (sky.ts 966), STAR_VERT with the dust term, own material. I report it too, as FLIGHT.
+
+T0
+- sha256 of 002200.png (draft): 64d28f574170e155014dac44870c8b781959c15b71d11fbbe4da2cf346cfe6c1, 1146822 bytes. Attached.
+- The run that reads the values gave the same bytes (same sha256), so reading changed nothing. Values are read two ways and agree to float rounding: (a) from WebGL itself, gl.getUniform at each POINTS draw (init script attached); (b) from the materials in the page, by debug lines in a scratch copy of sky.ts placed just before renderer.render(this.starScene, camera). Full list attached (vstrip-t0-values.txt).
+- gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE) in software: [1, 1023].
+- Visible flags at 2200: stars true, flight true, deep true, strip true. All four are drawn.
+- Draw counts of the frame (the last four POINTS draws before the picture is taken, all drawElements, into a render target, viewport 0 0 960 540, no scissor): STRIP 62599, DEEP 64866, FLIGHT 37087, STAR 315227.
+- Page state: swap 0.2429797, exposure 0.4064965, glow 1, flightLift 0.1299309, flightLevel 0.1299309, deepLevel 1, cull true.
+- Uniforms. Same in all four: uPixel 0.5; uPatchLens [0] (0.7145312, 0.4019238, 2.5, 1), [1] (1, 1, 0, 0); uPatchMode [0] (0.9051624, 0, 0.0833333), [1] (0, 0, 0.05); uSunSpot (3.9633475, -3.5510011, 5, 26); uSunHalf (960, 540, 0); uStarLaw (2, 0.6, 0.06, 0.2429797); uCore 0.7.
+- STAR: uExposure 0.4064965, uHalo 0.0175885. It has no uLift, uStripSize, uDeepSize, uStripStar, uBandGrade, uFlightBand, uFlightLook.
+- FLIGHT: uExposure 0.1299309, uHalo 0.035. The same seven are absent.
+- DEEP: uExposure 0.1299309, uHalo 0.035, uDeepSize (2.6, 2.2, 16). Absent: uLift, uStripSize, uStripStar, uBandGrade, uFlightBand, uFlightLook.
+- STRIP: uExposure 0.2729948, uLift 0.1299309, uHalo 0.035, uStripSize (2.6, 2.2, 16), uStripStar (0.85, 3), uBandGrade (1.1, 1.4, 0.1, 0.9), uFlightBand (0.006, 0.03, 0.5, 1.8), uFlightLook (1, 0.56). Absent: uDeepSize.
+- What these values rule out, by arithmetic on the measured values (STATED, not drawn): uPixel is 0.5, so DEEP and STRIP cannot go under 2.6 * 0.5 = 1.3 px unless a NaN enters; the patch that is off has uPatchLens (1, 1, 0, 0), so there is no division by zero through uPatchLens (x / y = 1); uSunHalf.z is 0 and the sunFade edges are 5 and 26, so sunFade is 1; uFlightLook.y and uFlightBand.y are not 0; uStarLaw.w is above 0, so the law loop of STAR_FRAG runs.
+
+T1
+- Markers as you wrote them, with two things to know: the test is written "if (size * size > 1e-30) {} else { ... }" (same truth table, NaN included), and the line stands as the last line of main so that no later line overwrites vColor (in STAR and DEEP vColor is set after the size). The text is rewritten at shaderSource by an init script (attached), no source file changed; the four rewritten texts were posted back and I read them. Colours: STAR magenta, DEEP cyan, STRIP yellow, FLIGHT (0, 8, 0).
+- Result: 0 marked points of STAR, 0 of DEEP, 0 of STRIP, 0 of FLIGHT. The picture has the same bytes as T0 (sha256 64d28f57...), 0 pixels differ. So there is no x range to give, and no marked point sits where the PC's false stars sit. Picture beside the PC attached (left my T1, right the right half of vulkan-preview-002200.jpg).
+- Not proven by this draw: that a marker would show if one were set. The next probe draws markers on purpose and settles that.
+
+THE PC PICTURE, measured from the JPG (pixels of the PC half more than 60 levels brighter than the approved half)
+- Vulkan: 1301 pixels in 465 blobs, x 0 to 98, y 62 to 539; none above row 62 and none right of x 98. GL: 1282 pixels in 464 blobs, same box.
+- The right edge is a straight slanted line: largest x per 60 rows from the top: 98, 90, 85, 81, 74, 70, 62, 54. The top edge is at row 62.
+- Besides the points the strip is lighter as a whole: where no hot pixel lies, PC minus approved is 21.65 levels at x 0 to 79, 0.22 at x 120 to 199, -0.12 at x 400 to 959 (part of it may be the JPG spreading the points).
+
+MY LEAD (STATED, not measured): a region with one straight slanted edge across the band and one edge along it looks like a range of galactic longitude cut off at a latitude, and the only term that depends on longitude alone is region in STRIP_VERT (one texel of the 64 wide level of uSky, read by textureLod). After T2 and T3 I test it in software with two probes: (a) each point set drawn as 1 px markers in its own colour, to see on which set's positions the 465 PC points fall; (b) STRIP points marked where the raw value under the sqrt is negative, NaN or infinite, before the clamp can hide it.
+
+## VSTRIP 1 received from the Builder (/root) (saved 08:46:00 by my clock, 28 Nov, shortly after it came; word for word; high priority). Draft is enough for the diagnosis; go on with T2, T3 and three probes.
+
+> VSTRIP 1 received, from the Builder (/root). Answers:
+> 1. Draft is enough for the diagnosis. Do not spend time on tier final now. (A cure, once there is one, must be proven byte equal in software at draft AND at final, and I will repeat that myself.)
+> 2. Go on with T2 and T3, then both probes: (a) each point set as 1 px markers in its own colour, (b) STRIP points marked where the value under the sqrt is negative, NaN or infinite.
+> 3. Add one probe (c) for your own lead: in STRIP_VERT replace the one texel read of uSky (the region term, textureLod of the 64 wide level) by each of these in turn and send the picture of each beside the PC picture: the constant 0.0, the constant 1.0, and the value read one level higher and one level lower. On a card, a textureLod in a VERTEX shader on a texture whose mip chain is incomplete, or that is not filterable as set up, can return 0 or garbage while the software renderer returns the true texel. So also write down for uSky: its internal format, its min and mag filter, whether mipmaps were generated before the first draw of the strip, its size, and the lod asked for. If the texture is a float or half float type with a linear filter, say so in the first line.
+> 4. Say in each mail which lines are MEASURED by you and which are your reading of the code.
+> Do not change src/ on any branch. Send VSTRIP 2 when T2, T3 and the probes are drawn, with the pictures.
+
+## VSTRIP P from the Builder (/root) (saved 08:50:29 by my clock, 28 Nov, shortly after it came; word for word; high priority). A lead from the Builder's own look at the PC picture, to be put first.
+
+> VSTRIP P from the Builder (/root): a lead from my own look at the PC picture, put it FIRST, before T2, T3 and the texture probe.
+> What I see in the PC picture of capture 2200 (Vulkan and OpenGL alike): the false dots are uniform in size and brightness, dense, and they fill a region with a STRAIGHT TOP EDGE (about y 55 of 540) and a straight slanted right edge; the region runs out of the picture at the left and at the bottom. That is not the Milky Way band (which runs across the middle, through the brown dust). A region with straight edges in a perspective view is the outline of a SKY PATCH: patchCoord() in SKY_PATCH_GLSL (src/space/sky.ts line 58) is a pinhole projection (pc.xy / max(-pc.z, 1e-4)), so a patch rectangle has straight edges in any view. Inside a patch the point programs multiply by (1.0 - patchCoord(i, d).z * uPatchLens[i].w): sky.ts line 548 (STAR), 601 (DEEP), 638 (STRIP). In software that factor is 0 or near 0 inside the patch, so the points are hidden there, because the patch picture holds those stars already.
+> Test P1 (software, draft, capture 2200): force that factor to 1.0 in all point programs (one draw), then in each program alone (STAR, DEEP, STRIP, FLIGHT if it has it). Compare the places of the dots that appear with the PC dots (your 465 blobs): the same places, yes or no, and for which program. Send the picture beside the PC picture and the count of blobs that match within 1 px.
+> Test P2: write down for capture 2200 the values of uPatchM, uPatchLens, uPatchRing, uPatchMode, uPatchFold for both patches, which patch covers that region, and whether any smoothstep in patchCoord has edge0 &gt;= edge1 with these values (smoothstep(uPatchMode.z * uPatchFold.y, uPatchMode.z, ...) and smoothstep(uPatchRing.z, uPatchRing.w, r)): that is undefined in GLSL and a card may answer differently from the software renderer. Also whether uPatchLens.w is exactly 1.
+> Test P3, only if P1 matches: emulate the card: replace each such smoothstep in patchCoord in turn by the other legal answer (0.0, 1.0, or the step function) and see which one gives the PC picture.
+> Say which lines are MEASURED. Do not change src/ on any branch. Mail VSTRIP P when P1 is drawn, do not wait for P2 and P3.
+
+## 28 Nov, 09:04 UTC: VSTRIP P to the Builder (word for word; sent 09:04:55 at the latest; high priority; attachments as its text names them)
+
+VSTRIP P
+All numbers: software (ANGLE on SwiftShader), preview 960x540, capture 2200, tier draft. MEASURED = drawn or read from the running page by me. STATED = my reading of the code.
+
+P1. NO MATCH (MEASURED).
+The patch factor forced to 1.0 in all four point programs in one draw (the text "(1.0 - patchCoord(0, X).z * uPatchLens[0].w) * (1.0 - patchCoord(1, X).z * uPatchLens[1].w)" replaced by "1.0" once in each of STAR, FLIGHT, DEEP, STRIP at shaderSource; the four rewritten texts came back and hold no patchCoord(0 any more).
+Picture sha256 9ac0af871cb976eb8fade66e8af65952601be4f401531fd29b4df8b4f1671416. 204551 pixels differ from the unchanged draw. New bright dots (over 40 levels brighter): 2458 pixels in 2013 blobs, spread over the WHOLE frame: 387 pixels in the region of the strip (1.06 percent of it), 2071 in the rest (0.43 percent). No strip, no edge.
+The PC's 465 false stars on a new dot: exactly 3 of 465 (control, the PC points shifted six ways: 7, 4, 8, 1, 4, 3). Within 1 px: 33 of 465 (control: 37, 36, 39, 30, 37, 28). That is chance level.
+The alone draws (STAR, FLIGHT, DEEP, STRIP) are not drawn: the dots of the all draw are the sum of the four (STATED: the points are added), so no single program can match where the sum does not. Say so if you want them anyway.
+A second measure, from my probe drawn before your mail (each point set as 1 px markers over the whole frame, no patch factor in them): PC false stars exactly on a marker: FLIGHT 6 (control 6 to 10), DEEP 27 (control 17 to 27), STRIP 63 (control 49 to 71). Within 1 px: 46 (53 to 63), 167 (150 to 172), 184 (174 to 187). Chance level for all three. STAR was switched off in that probe; STAR is covered by the all draw above.
+
+P2. Values at capture 2200 (MEASURED with getUniform on the running page: uPatchM, uPatchRing and uPatchFold at the STRIP draw of the captured frame; uPatchLens and uPatchMode at the STAR, FLIGHT, DEEP and STRIP draws in the run of VSTRIP 1, the same numbers in all four; all five read again in the sky program a few minutes ago, the same numbers. uPatchMode[0].x is 0.90516245, printed as 0.9051625 in the list of VSTRIP 1.):
+uPatchM[0] (in the order of getUniform, column by column) 0.6551932, 0.3841780, -0.6504838, -0.5217500, 0.8528185, -0.0218499, 0.5463504, 0.3537058, 0.7592058
+uPatchM[1] 1, 0, 0, 0, 1, 0, 0, 0, 1
+uPatchLens[0] 0.7145312, 0.4019238, 2.5, 1      uPatchLens[1] 1, 1, 0, 0
+uPatchRing[0] 0.5, 0.5, -1, 0                   uPatchRing[1] 0, 0, 0, 1
+uPatchMode[0] 0.9051624, 0, 0.0833333           uPatchMode[1] 0, 0, 0.05
+uPatchFold[0] 0, 0                              uPatchFold[1] 0, 0
+uPatchLens[0].w is exactly 1 (getUniform gives 1), uPatchLens[1].w is exactly 0.
+The smoothsteps of patchCoord with these values: patch 0: smoothstep(0, 0.0833333, ...) and smoothstep(-1, 0, r); patch 1: smoothstep(0, 0.05, ...) and smoothstep(0, 1, r). In all four edge0 is below edge1. None is undefined at this frame.
+Which patch covers the region (MEASURED: computed for every pixel of the frame from projectionMatrix and modelViewMatrix read at the same draw): patch 0 covers the WHOLE frame. Its uv runs from 0.222 to 0.899 in x and 0.210 to 0.902 in y over the frame; the smallest distance to its border is 0.0976, above the edge band 0.0833. So inside = 1 and patchCoord(0, d).z = 0.9051624 at every pixel: no outline of patch 0 crosses the frame, and the strip (patch 0 uv.x 0.224 to 0.287) is not at a border of it. Patch 1 is off (z = 0 at every pixel).
+P3: its condition is not met (P1 does not match). Not drawn.
+
+WHAT THE REGION IS (MEASURED, from the same matrices and uGal read from the page; the band constants read in src/space/skyframe.json, band: repeats 2, offsetDeg 90, latSpanDeg 45, fadeStart 0.12, fadeEnd 0.3):
+The region is cut by the two outputs of bandCoord() (sky.ts 35 to 42), in galactic coordinates:
+a) the seam of the band coordinate bc.x. bc.x = (atan(g.y, g.x) / 2 pi + 0.5) * 2 + 0.5 runs from 0.5 to 2.5 around the sky and jumps at galactic longitude 180 degrees. That seam crosses the frame: at x 100 in row 62, x 77 in row 300, x 53 in row 539 (a meridian, so a straight slanted line). Right of it bc.x is up to 2.5; left of it bc.x is 0.5 to 0.527.
+b) the band weight bc.z, which is above 0 only where abs(galactic latitude) is under 13.5 degrees (0.3 * 45). That limit crosses the left edge at rows 60 to 73.
+The set "left of the seam AND bc.z above 0" is 36671 pixels, rows 58 to 539, columns 0 to 99.
+All 465 of the 465 false stars lie in it (bc.x 0.50004 to 0.52651, abs latitude 0.03 to 13.44 degrees).
+Left of the seam where bc.z = 0 (6922 pixels, the top left corner): 0 false stars. Right of the seam where bc.z is above 0 (378096 pixels): 0 false stars.
+The false stars are as dense where the band weight is under 0.05 (1.39 per 100 pixels) as where it is 1 (1.23 per 100 pixels).
+Picture attached: the PC's left 200 columns, and the same with the outline of the computed set in green.
+
+MY READING (STATED):
+1. The false stars are not points. They are made in the sky fragment program (SKY_FRAG), inside the block that runs only where bc.z is above 0 (sky.ts 289 to 325: for (int k = 0; k < (bc.z > 0.0 ? 1 : 0); k++)), and only on the side of the seam where bc.x is 0.5 to 0.53. That fits T1, T2, T3 (0 marks, same bytes) and P1.
+2. What differs by the side of the seam in that block: sky.ts 284 to 286 takes for dx.x and dy.x the smaller of the derivative of bc.x and of t2 = fract(bc.x + 0.5) - 0.5. Right of the seam (bc.x 2.3 to 2.5) both are the same bits. Left of it bc.x + 0.5 is just above 1.0, where a float has half the precision of bc.x, so the two derivatives differ in the last bits. Then texelPlan (src/core/texel.ts 28: dx == ix and dy == iy) says texture() for some pixels and textureGrad for others inside one 2x2 block, and texture(uBand, ...) with implicit derivatives runs inside a loop that not every pixel of the block runs. GLSL calls that undefined. Software computes all four pixels of a block, and under Direct3D the HLSL compiler does not keep a derivative inside such a loop (my reading, not measured); a card under OpenGL and Vulkan may take a wrong mip level there.
+3. The even spacing of the false stars looks like the cells of stopLayer (sky.ts 177 to 210) rather than stars of a picture. Not decided yet.
+Both are being tested now in software: one draw that marks the stars of the two stop layers and the pixels that take the textureGrad path, and reads all uniforms and texture facts of the sky program; then the emulation (the wrong mip level forced). VSTRIP P2 follows with it.
+
+Texture facts of uSky for your point 3 (MEASURED at the STRIP draw): texStorage2D with 14 levels, internal format 35907 (SRGB8_ALPHA8), 8192 by 4096; texSubImage2D level 0 RGBA UNSIGNED_BYTE from an image; generateMipmap; all three before the first STRIP draw. Min filter 9987 (LINEAR_MIPMAP_LINEAR), mag 9729 (LINEAR), wrap S REPEAT, wrap T CLAMP_TO_EDGE, anisotropy 4, base level 0. The lod asked is log2(8192) - 6 = 7 (64 by 32). Not a float type.
+T2 and T3 (MEASURED): both the same bytes as T0, 0 marked points. Probe (c) not drawn yet; say if you still want it after this.
+
+Attached: P1 all beside the PC; the PC with the computed region; the full geometry print; the init script of P1.
+
+## VSTRIP P, answer from the Builder (/root) (saved 09:14:41 by my clock, 28 Nov, shortly after it came; word for word; high priority). The Builder checked my numbers and names five points: the forced level, the marker draw, the cure candidate, the full list, the order of the mails.
+
+> VSTRIP P answer from the Builder (/root), 09:12 UTC.
+> 1. Your region holds by my own measure on the PC's two pictures (pixels over level 150 on the PC where the reference is under 110): none right of column 110, none above row 62; the rightmost false dot in each band of 60 rows is at column 98, 89, 85, 81, 73, 69, 61, 53, against your seam line 100 to 53. My patch lead is dead. No alone draws, no probe (c).
+> 2. Two things of mine for your reading.
+> (a) MEASURED: the mean level of the left 100 columns is 37.5 on the PC against 15.3 in the film. The 635 bright pixels explain only about 2.4 of those 22 levels. So the whole region is lighter, not only the dots.
+> (b) My reading of sky.ts 289 to 325 (STATED, not measured): band = soft * lane * (1 - uStopBand.y + stopLayer + stopLayer) with lane = pow(min(lum(band) / sl, 1), uStopBand.z). If b0 comes back too bright in the region (a far too coarse level of uBand, near the mean of the whole band, in the dim anticentre), lane goes to 1. Then the region gets lighter as a whole and the stop layer's stars, one in each cell, show at full strength and all alike. That would explain the even spacing (cells), the equal brightness (lane capped at 1) and the lighter field in one. Test it in software the cheapest way: force b0 = textureLod(uBand, bc.xy, L).rgb for L = 4, 6, 8, 10 and the top level, only where bc.x is under 0.53, and compare (i) the new dots with the PC's 465, with your shifted controls, and (ii) the mean level of the left 100 columns with the PC's 37.5. If that matches, the wrong level is shown as the mechanism, whichever undefined operation makes it on the card. If it does not match, say what does (your marker draw).
+> 3. Then the cure candidate, proven in software only. The PC is busy with the render for about 17 more hours and nothing starting with CURE goes to main while it runs, so there is no hurry that would excuse a guess. Rule of the cure: no texture() with implicit derivatives inside any loop or branch whose condition differs from pixel to pixel. For the band block: take texture(uBand, bc.xy, plan.y) once at the top level of main, before the k loop, and select inside. Proof I need: the same sha256 as the unchanged draw at draft and at final for capture 2200, and at draft for every capture of the PC's test (the list in handoff/test). Say what it costs in seconds a frame.
+> 4. A full list, file and line, of every texture() with implicit derivatives and every dFdx, dFdy, fwidth that sits inside control flow that differs per pixel, in all shader texts the film draws: the sky program, gradTexel in src/core/texel.ts (it has the same pattern) with every caller, and the stop programs. The same fault can sit in places the PC's 22 test frames did not show.
+> 5. Send VSTRIP P2 when the marker draw and the forced level are done; the cure and the list may follow as VSTRIP P3. Keep your H60 pieces running beside it. Nothing to main, nothing pushed.
+
+## VSTRIP P, correction of point 2 (a) from the Builder (/root) (saved 09:15:18 by my clock, 28 Nov, shortly after it came; word for word; high priority). One correction to the mail before.
+
+> VSTRIP P answer, correction of point 2 (a) from the Builder (/root), 09:15 UTC. Two numbers in my last mail (15.3 and "22 levels") I could not find again in my logs; drop them. MEASURED again now on the PC's two pictures of capture 2200 (right half PC, left half reference, luma): the region left of your seam line (x 100 at row 62 to x 53 at row 539, 36,567 pixels) has a mean level of 46.3 on the PC against 19.1 in the reference under Vulkan, 46.1 against 19.1 under OpenGL. With the bright pixels left out (PC over 90): 41.6 against 17.9. The rest of the left 100 columns: 18.6 against 14.5. Columns 100 to 199: 24.0 against 23.5. The false pixels alone (572) carry 2.4 levels of the left 100 columns' mean. So the whole region is lighter by about 24 levels, and that is the second target of your forced level test in point 2 (b): the forced draw must reproduce both the dots and a region mean near 46 (41.6 without the dots). Everything else in the mail stands.
+
+## 28 Nov, 10:00 UTC: VSTRIP P2 to the Builder (word for word; sent 10:00:25 at the latest; high priority; attachments as its text names them)
+
+VSTRIP P2 neptune_builder, written 10:00 UTC
+
+Ground of every number: clean copy of main 0562a78, software, preview 960x540, capture frame 2200, tier DRAFT (one sample). The PC's picture is tier final, 16 samples (STATED: tools/capture-check.ts draws the test with tier final). No source file changed, nothing pushed, src untouched on every branch: each change was made to the shader text at shaderSource by an init script; the page posted the rewritten text back and I checked that it holds the added line (MEASURED). T0 is my unchanged draw (sha256 64d28f574170e155014dac44870c8b781959c15b71d11fbbe4da2cf346cfe6c1).
+
+SHORT
+1. The wrong level of uBand is NOT the mechanism. Forced levels 4, 6, 8, 10 and 13 (the top) and lane = 1 reproduce neither the dots nor the lighter region. MEASURED.
+2. What does reproduce both targets at once: single hot pixels in the sky pass at the PC's 465 places. The lighter region is then the bloom of those pixels, not a second fault. MEASURED in software; that the card does it this way is my reading.
+3. Which operation on the card makes a pixel hot is UNKNOWN and cannot be shown in software. It is not the value of b0 (point 1). In software, zero derivatives, Inf and NaN all make black dots, not white ones (MEASURED).
+4. Why this region: only there the choice between texture() and textureGrad() differs from pixel to pixel (marker draw S1, MEASURED), because of a lost bit in t2 (model, STATED).
+
+1. FORCED LEVEL (your point 2 b): NO MATCH
+Line added right after the two j loops that fill b0 (line 363 of the rewritten text): if (bc.x < 0.53) b0 = textureLod(uBand, bc.xy, L).rgb;
+uBand is 8192 x 2048, 8 bit, 14 levels, so 13 is its top level (MEASURED from the page's texStorage2D call).
+Targets by my count of your region (36805 pixels, you count 36567): PC under Vulkan mean 46.2, without pixels over 90: 41.6, rest of the left 100 columns 18.3, columns 100 to 199: 24.0. Reference half 19.1, 18.4, 14.4, 23.5. My T0 19.0, 18.2, 14.3, 23.4. All MEASURED.
+draw       region mean   without over 90   pixels that differ from T0 outside the region
+L = 4      19.0          18.3              49
+L = 6      18.9          18.2              46
+L = 8      18.7          18.0              118
+L = 10     18.3          17.6              306
+L = 13     18.3          17.6              303
+lane = 1   19.0          18.3              51     (line 380 of the rewritten text: if (bc.x < 0.53) lane = 1.0;)
+In every one of the six: rest of the left 100 columns 14.3, columns 100 to 199: 23.4, not one pixel more than 40 levels brighter than T0, so 0 of the PC's 465 dots are hit (shifted controls 0 as well), level at the PC's 465 places median 16 (PC 249). All MEASURED.
+Reading of the code (STATED): b0 enters the picture only through lane, and min() caps lane at 1. With lane forced to 1 the region stays at 19.0, so lane is already at or near 1 there in this frame. No value of b0 between 0 and 1 can lift the region or make a dot; a coarse level makes the region a little darker, not lighter.
+
+2. WHAT DOES MATCH: HOT SINGLE PIXELS (my marker draw of the second kind)
+Draw hx64: just before the last line outColor = vec4(col, 0.0) of the sky program, col = vec3(64.0) at exactly the PC's 465 pixels (a bit table in the text). 64 is the clamp of the bloom prefilter in src/post/chain.ts line 17, so a larger value gives the same bloom (STATED).
+Draw hy64: the same at all 1301 pixels where the PC is more than 60 levels brighter than its reference half.
+            region mean   without over 90   rest of left 100   columns 100 to 199
+PC Vulkan   46.2          41.6              18.3               24.0
+hx64        42.5          38.4              17.4               23.7
+hy64        73.0          58.9              22.4               24.5
+T0          19.0          18.2              14.3               23.4
+Mean level in the region, then 1 to 4, 5 to 9, 10 to 19, 20 to 39, 40 to 79 pixels outside it:
+PC Vulkan   46.5  30.0  26.9  25.1  24.7  24.4
+hx64        42.8  27.3  25.4  24.0  24.2  24.1
+reference   19.3  19.7  20.8  21.4  23.1  24.0
+T0          19.1  19.6  20.6  21.2  22.9  23.8
+All MEASURED. So 465 hot pixels alone give 23.5 levels of rise in the region where the PC has 27.1 (87 percent), outside the region a fall off of the same shape at 75 to 81 percent of the PC's rise, and the dots at the right places (465 of 465 at level 255). All 1301 at 64 is too much, so most of the PC's 1301 bright pixels are halo of the 465 and not hot themselves.
+Reading (STATED): the "whole region lighter by about 24 levels" of your correction and the dots are one fault. The bloom spreads the hot pixels; nothing else has to be lighter.
+
+3. WHAT CANNOT MAKE THE DOTS IN SOFTWARE
+Draw hz: dx and dy of main set to vec2(0.0) at the PC's 465 pixels, right after vec2 plan = texelPlan(uBand, bc.xy, dx, dy). Result: black dots (level at the 465 places median 0), a black block of 2x2 pixels at each; region mean 18.2; only 4 of 465 places come out bright. MEASURED.
+Draw hi: col = +Inf at the 465 pixels. Draw hn: col = NaN there. Result of both: black blocks of 2x2 pixels (level median 0, highest 3), region mean 18.1, no bloom; the two pictures are byte equal (sha256 b96cf8127c4a6dcaa466af29a5431f80e0c3282e449a7435956f5a83adec16ac). MEASURED.
+So in software only a finite large value gives the PC's look. Whether the card turns a NaN into the upper bound of min() or clamp() is UNKNOWN (the language leaves min, max and clamp of NaN open: STATED from the GLSL text, not measured).
+Reading (STATED): the PC's values look finite. On the PC each dot is one bright pixel (mean 247) with a weak bleed into three neighbours (87, 75, 71 against 53 around); software shows the same weak bleed for a finite 64 (87, 78, 77 against 47) but a full black 2x2 block for Inf or NaN.
+UNKNOWN: the bleed is one sided in both, but mirrored: on the PC to the right, upper and upper right pixel, in software to the left, lower and lower left pixel. The same for all four parities of row and column in both. I did not find the pass that makes it (bloom and sharpen are symmetric by the code; one sample has no jitter).
+
+4. WHY THIS REGION: THE PLAN MIX (marker draw S1 and a model)
+S1 (MEASURED): the pixel is painted blue where plan.x is under 0.5, that is where the band block takes textureGrad() and not texture(). Far side with band weight 0 (the top left corner, where no star mark hides the blue): 4102 of 6922 pixels blue, 59.3 percent. Near side with band weight 0: 42 of 96711. Of the 1707 blocks of 2x2 pixels wholly in that corner 699 have no blue pixel, 1008 have four, none has one, two or three: software takes one derivative for a whole block.
+Values at the draw (MEASURED with getUniform): uImplicit 1, uBandMap.xy 2 and 0.5, uStopBand 1, 0.35, 1.3, 1.2, so the stop branch runs and bc.x goes from 0.5 to 2.5; the far side has bc.x 0.5000 to 0.5286, the near side 2.2364 to 2.5 (my 64 bit model of bandCoord).
+Cause, STATED from a model in 32 bit floats (model/plan32.py, not the card's own atan): t2 = fract(bc.x + 0.5) - 0.5 loses the last bit of bc.x where bc.x is 0.5 to 1.0 or 1.5 to 2.0. Then dFdx(t2) differs from dFdx(bc.x), the smaller of the two is picked, and dx == ix in texelPlan fails. Model: textureGrad path at 60.4 percent of the far side with one derivative a block (S1 measured 59.3), 0.0 to 0.1 percent on the near side; 40 percent for bc.x 0.5 to 1.0, 35 percent for 1.5 to 2.0, 0.0 percent for 1.0 to 1.5 and 2.0 to 2.5. So half of the band's length has this mix, not only this strip.
+With one derivative a row and a column (fine derivatives) the model gives 53.0 percent, and of 9091 blocks wholly in the region 2724 all plain, 1892 none plain, 4475 mixed.
+Hypothesis (STATED; the card's kind of derivative is UNKNOWN): if the card under OpenGL and Vulkan takes fine derivatives and under Direct3D 11 one a block as software does, then only under OpenGL and Vulkan a block splits, and texture(uBand, bc.xy, plan.y) runs for part of a block inside the k and j loops. That is the undefined case of your rule. It names the place, not the operation.
+The PC's 465 dots show no tie to the single pixel classes of my model (221 on the plain path where 218 are expected by chance, 244 on the textureGrad path where 247 are expected), and they are spread evenly: 1.2 to 1.5 of 100 region pixels in every class of band weight, of bc.x and of row, nearest neighbour distances as in a random scatter (MEASURED). Not expected otherwise: another atan, 16 samples.
+
+5. EXCLUDED AND OPEN
+Excluded (MEASURED): any level of uBand; lane; the point layer's own stars (S1: 9 of the 465 dots sit on one, shifted controls 1 to 7; the grain layer has a star mark in 76 of 100 region pixels and cannot be told apart); the band picture's texels at the dots (level 0 is never black in the region, and the dots are no different from six shifted controls: median of the highest of four texels 47, controls 46 to 48).
+Open (UNKNOWN): the operation on the card that yields a large finite value at about 1.3 of 100 pixels of the region; whether the card takes fine derivatives; the mirrored bleed.
+Two checks that need no new draw of mine, if you hold the pictures:
+a. The PC's Direct3D 11 picture of capture 2200 at the 465 places (list attached, row and column): equal to the reference means nothing is made there under Direct3D; black blocks would mean Inf or NaN is made under every back end and only its handling differs.
+b. src/main.ts line 28 is engine.sky.cull = mode === 'capture', src/core/engine.ts line 333 sets uImplicit from it, and PATCH_IMPLICIT follows it (sky.ts 1373 to 1375): the plain texture() paths exist in capture mode only (STATED from the code). One frame on the PC with uImplicit at 0 would tell whether the plain path is the place. Not now, the PC is busy.
+
+6. WHAT THIS MEANS FOR THE CURE (P3)
+Software can prove a cure byte equal, as you ask. It cannot show that the cure removes the dots, since software has none and point 1 says the value of b0 does not make them. I will say that again in P3 and keep the two apart.
+Now running: the unchanged draws of the six preview captures of the PC's test at draft, as reference for P3. Then the cure candidate in a new copy under /tmp/vs, the proof draws, the cost, and the full list.
+Film loop: running (pid 24747), p9 not yet out.
+
+ATTACHED
+vstrip-p2-hx64-pc-draw-t0.png, vstrip-p2-hy64-pc-draw-t0.png, vstrip-p2-hi-pc-draw-t0.png: left the PC under Vulkan, middle my draw, right T0; the left 220 columns, 3 times enlarged.
+vstrip-p2-fl13-beside-pc.png: forced top level beside the PC.
+vstrip-p2-s1-left.png: marker draw S1, left part.
+vstrip-p2-pc-zoom.png: the PC's dots enlarged (above) and the reference (below).
+vstrip-p2-peaks.txt: the 465 places.
+vstrip-p2-numbers.txt: every table in full.
+vstrip-p2-init-fl13.js.txt, vstrip-p2-init-hx64.js.txt: two of the init scripts as run.
+
+## H60 MOVE from the Builder (/root) (saved 10:35:43 by my clock, 28 Nov, shortly after it came; word for word; high priority). One piece at the end of my film list goes to another machine. The mail came with &gt;, &lt; and &amp; as written here; I ran the lines with the three plain characters.
+
+> H60 MOVE from the Builder (/root), 10:34 UTC. To even out the machines, 1 pieces at the end of your list go to another machine. Run exactly this. It removes these lines from /tmp/h60r-list.txt; the loop reads the list anew before each piece, so nothing else is needed and the piece you are drawing now is not touched:
+>
+> cat &gt; /tmp/h60r-drop.txt &lt;&lt;'EOF'
+> sun.travel 532-532
+> EOF
+> grep -vxFf /tmp/h60r-drop.txt /tmp/h60r-list.txt &gt; /tmp/h60r-list.new &amp;&amp; mv /tmp/h60r-list.new /tmp/h60r-list.txt; grep -c . /tmp/h60r-list.txt; grep -cxFf /tmp/h60r-drop.txt /tmp/h60r-list.txt; tail -n 1 /tmp/h60r-state.txt
+>
+> The second number must be 0. If one of these pieces is being drawn right now or is already done on your disk, leave that as it is and name it in your answer, so that the other machine can be told. Answer /root with one line: MOVE DONE neptune_builder, the two numbers and the last line of the state file. Then go on as before: watch for packs and mail each one.
+
+## 28 Nov, 10:36 UTC: MOVE DONE to the Builder (word for word; sent 10:36:27 at the latest; high priority; attachments as its text names them)
+
+MOVE DONE neptune_builder 23 0 start 08:01:01 root /home/user/workspace/repo old loops left 0
+
+## 28 Nov, 10:37 UTC: H60 pack p9 to the Builder (word for word; sent 10:37:09 at the latest; high priority; attached /tmp/h60-neptune_builder-p9.tar and /tmp/h60-neptune_builder-p9.txt; nothing else in it)
+
+H60 neptune_builder p9
+
+- The tar: 634880 bytes, sha256 e1dc7943a117a0028f22ab97bb0e66222e821bfa3e6349ada60c77c1575fd254; it holds
+  jupiter.terrain.span3060-3067.mp4 (458312 bytes), mercury.hold.span568-569.mp4 (163802 bytes), each with its .json,
+  and h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p9 10:36:11 chunks 2 left 4
+  failed 0 next: jupiter.terrain 3068-3075 list: # neptune_builder v1". The last wrote line of the log: "wrote
+  jupiter.terrain.part000.mp4 frames 3060-3067 render 4190 s encode 3.3 s". Delivered true. The pack holds two pieces:
+  the loop packs only between pieces and not before 40 minutes have passed since the pack before. mercury.hold 568-569
+  ended 09:26:06, 27 minutes after p8; jupiter.terrain 3060-3067 ended 10:36:11. The 4 left of the PACK line still count
+  sun.travel 532-532: the line was written a few seconds before I ran the lines of H60 MOVE. Left on my list now:
+  jupiter.terrain 3068-3075 (being drawn since 10:36:11), 3076-3083 and 3084-3089.
