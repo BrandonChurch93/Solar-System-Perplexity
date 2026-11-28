@@ -5543,3 +5543,31 @@ If you have no work in hand, skip (a) and (b) and answer point 5 alone.
 - 01:50:30 H60R p4 appeared (first line of its txt 0; "chunks 2 left 10 failed 0 next: saturn.terrain 3730-3739"): mars.hold 2370-2399 (00:51:26 to 01:07:10, 944 s for 30 half frames) and saturn.terrain 3720-3729 (01:07:10 to 01:50:30, 2600 s, 4.3 min a half frame), each RC 0. SENT 01:50:35 to /root (high): the text `H60 mercury_builder p4` and nothing else, with the tar (3553280 bytes) and the txt (953 bytes). Mark `/tmp/m/jobs/H60R-sent-p4`. 5098 MB free; 0 lines with Shader Error or not usable. The script runs; saturn.terrain 3730-3739 is being drawn since 01:50:30. Left after it: saturn.terrain 3740-3749, earth.travel 2234-2237, neptune.rise 4977 to 4983 (seven pieces).
 - 02:36:51 H60R p5 appeared (first line of its txt 0; "chunks 1 left 9 failed 0 next: saturn.terrain 3740-3749"): saturn.terrain 3730-3739 (01:50:30 to 02:36:51, 2781 s, 4.6 min a half frame), RC 0. SENT 02:36:56 to /root (high): the text `H60 mercury_builder p5` and nothing else, with the tar (604160 bytes) and the txt (955 bytes). Mark `/tmp/m/jobs/H60R-sent-p5`. 5095 MB free; 0 lines with Shader Error or not usable. The script runs; saturn.terrain 3740-3749 is being drawn since 02:36:51. No mail from /root since H60R; no LIST mail so far.
 - 03:26:48 H60R p6 appeared (first line of its txt 0; "chunks 1 left 8 failed 0 next: earth.travel 2234-2237"): saturn.terrain 3740-3749 (02:36:51 to 03:26:48, 2997 s, 5 min a half frame), RC 0. SENT 03:26:52 to /root (high): the text `H60 mercury_builder p6` and nothing else, with the tar (614400 bytes) and the txt (957 bytes). Mark `/tmp/m/jobs/H60R-sent-p6`. 5092 MB free; 0 lines with Shader Error or not usable. The script runs; earth.travel 2234-2237 is being drawn since 03:26:48; after it the seven pieces neptune.rise 4977 to 4983. About 02:40 this session was cut once and came back; nothing was lost (the marks and the done files agreed, the wait tool still ran). The push of the note before this one failed twice (rc 128) and went through on the third plain try; the note helper now tries up to five times, 12 s apart.
+- 03:50 about (2026-11-28 UTC) H60 MORE came from /root (high): 18 more pieces for my list. Entities decoded; verbatim:
+  > H60 MORE from the Builder (/root), 03:48 UTC. 18 more pieces for your list, moved from another machine to even out the machines. Run exactly this. It appends them to /tmp/h60r-list.txt; the loop picks them up by itself, also after LIST EMPTY:
+  >
+  > [ -n "$(tail -c1 /tmp/h60r-list.txt)" ] && echo >> /tmp/h60r-list.txt
+  > cat >> /tmp/h60r-list.txt <<'EOF'
+  > sun.terrain 34-37
+  > sun.terrain 38-41
+  > sun.terrain 42-45
+  > sun.terrain 46-49
+  > sun.terrain 50-53
+  > sun.terrain 54-57
+  > sun.terrain 58-59
+  > mars.terrain 2490-2519
+  > sun.rise 187-187
+  > sun.rise 188-188
+  > sun.rise 189-189
+  > sun.rise 190-190
+  > sun.rise 191-191
+  > sun.rise 192-192
+  > sun.rise 193-193
+  > sun.rise 194-194
+  > saturn.dive 3562-3566
+  > saturn.dive 3567-3569
+  > EOF
+  > grep -c . /tmp/h60r-list.txt; pgrep -fc 'h60r[.]sh'; tail -n 2 /tmp/h60r-state.txt
+  >
+  > If the loop is not running (the second number is 0), start it again as the H60R mail said. Answer /root with one line: MORE DONE mercury_builder, the number of lines in the list, loop running yes or no. Then go on as before: watch for packs and mail each one as soon as its .done file is there.
+- 03:52:09 H60 MORE done: the mail's lines from the `[ -n` line to the `grep -c` line run as they stand (the list ended with a line end, so no empty line was added; 18 lines appended in place, as this mail asks, though H60R said never to edit in place). Its three answers: 42, 1, "start 22:18:29 root /home/user/workspace/main-apart old loops left 0". `/tmp/h60r-list.txt` now 42 lines (sha256 8c9a388efa4a8da6f0e3891aaeb09f732a85cfdd51cae3655efc96d5e54b8d94; the list before it is kept as `/tmp/m/jobs/h60r-list-before-more.txt`). The loop was not restarted. ANSWERED 03:52:19 to /root (high), one line: "MORE DONE mercury_builder, 42 lines in the list, loop running yes". earth.travel 2234-2237 ended 03:48:56 with RC 0 (1328 s); neptune.rise 4977-4977 is being drawn. THE LIST FROM HERE: neptune.rise 4977 to 4983 (seven pieces), then sun.terrain 34-37, 38-41, 42-45, 46-49, 50-53, 54-57, 58-59, mars.terrain 2490-2519, sun.rise 187 to 194 (eight pieces), saturn.dive 3562-3566, 3567-3569. What I owe stays as in H60R: every pack at once, write only if the loop is gone, the disk is under 2 GB or a pack's first line is not 0, until /root writes that I am free.
