@@ -8547,3 +8547,13 @@ No more TROUBLE lines for slow frames: a single frame of the heavy parts takes u
 - First line of p4.txt: 0. Second line: "PACK earth_builder p4 02:18:34 chunks 2 left 6 failed 0 next: ending.lookback 5295-5324 list: # earth_builder v1".
 - Loop pid 11008 alive; drawing now ending.lookback 5295-5324 (began 02:18:34); free disk 5924 MB.
 - Sent so far: b0, p0, p1, p2, p3, p4. Next to send: p5 (waiter `bash /tmp/h60r-wait.sh 5`).
+
+### 03:27 UTC, 28 Nov: job H60R, pack p5 sent
+
+- 02:42:59: ending.lookback 5295-5324 done ("wrote ending.lookback.part000.mp4 frames 5295-5324 render 1437 s encode 4.8 s", RC film 0).
+- 03:27:31: uranus.terrain 4328-4341 done ("wrote uranus.terrain.part000.mp4 frames 4328-4341 render 2645 s encode 2.6 s", RC film 0).
+- 03:27:32: /tmp/h60-earth_builder-p5.done appeared. Sent to /root at 03:27:43 with the text `H60 earth_builder p5` and the two files attached (tar 3911680 bytes: ending.lookback.span5295-5324.mp4 and .json, uranus.terrain.span4328-4341.mp4 and .json, h60r-state.txt).
+- First line of p5.txt: 0. Second line: "PACK earth_builder p5 03:27:32 chunks 2 left 4 failed 0 next: uranus.terrain 4342-4353 list: # earth_builder v1".
+- Loop pid 11008 alive; drawing now uranus.terrain 4342-4353 (began 03:27:32); free disk 5915 MB.
+- Between 02:35 and 02:42 my session stopped and came back; the loop, the drawing and the waiter had kept running, and no pack appeared in that gap (checked the .done files against the sent markers at 02:42:01).
+- Sent so far: b0, p0, p1, p2, p3, p4, p5. Next to send: p6 (waiter `bash /tmp/h60r-wait.sh 6`).
