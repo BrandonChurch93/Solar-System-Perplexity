@@ -2,6 +2,47 @@
 
 Written by Claude Code on Brandon's Windows desktop on 2026-11-27 (MST). The branch `local-render-report` carries this file and the side-by-side pictures in `handoff/reports/windows-rtx5080/`. Nothing else in the repo was changed.
 
+## Test of CURE commit 9365ac1, 2026-11-27 22:42 to 22:50 MST (2026-11-28 05:42 to 05:50 UTC): VERDICT LOOK, no render
+
+- Commit tested: `9365ac1c16e0db936af82201a582ba9080453464` ("CURE Neptune bands and blobs, Saturn ring pixels at 4K, Windows section, test limits and tool guards"). The clone was brought to it by W3 (`git checkout -B main origin/main`), with 0 changed tracked files; `package-lock.json` unchanged, so no `npm ci`.
+- Command (W4, no `--angle`): `node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "RTX 5080" >> capture-check.log 2>&1`, exit 0.
+- Graphics: `ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)`, Chrome 158.0.8127.37. Engine hash `a455bc02904b0d42`.
+- Time per 4K frame: mean 6.3 s, slowest 37.5 s; the whole 4K film 14.9 to 18.8 h by the test.
+- **No render was started** (W5: only PASS is the go on this machine). `src/` untouched. Watching `main` every 10 minutes for the next CURE commit.
+
+### What the cure did
+
+- **The banded terminator is cured under Direct3D 11.** preview 9400: 31.39 dB before, **48.29** now; 9401: 31.28 before, **48.16** now; master 9090: 33.09 before, **40.70** now. The pictures are the approved pictures. This proves the Builder's theory of the handed table.
+- **The black blobs and specks are cured.** No blob or speck is left in any Neptune frame at 1080p or 4K.
+- Sun frames 180 and 396 (master) and 396 (uhd) pass under their own limit.
+
+### What still fails: the five close Neptune frames, all on SSIM
+
+| Frame | What | PSNR dB before cure | PSNR dB now | SSIM now | What I see (left the approved film, right this machine) |
+|---|---|---|---|---|---|
+| master 9720 | Neptune surface view | 32.32 | 34.68 | 0.9209 | The same picture. The deck texture is a little flatter and grainier, and the cirrus a little softer. No blobs. |
+| master 9480 | Neptune flight in (heavy) | 30.61 | 34.61 | 0.8948 | The same picture, with one visible difference: **the bright haze along the upper limb (top right) carries fine horizontal ripples or stripes** that the approved frame does not have; the approved haze there is smooth. A few faint grey dots sit at the left end of the upper cloud streak. The cirrus is a little softer. |
+| master 9916 | Neptune flight out (heavy) | 31.99 | 34.62 | 0.8977 | The same picture. The deck's fine streaks are a little coarser and the cirrus a little softer. No blobs. |
+| uhd 9480 | Neptune flight in, 4K | 31.16 | 35.33 | 0.9091 | As master 9480: **limb haze ripples** in the top row. At full size (bottom row) the storm, the deck and the cirrus match, with the cirrus slightly softer. |
+| uhd 9916 | Neptune flight out, 4K | 32.51 | 35.15 | 0.9137 | The same picture. At full size the deck's fine bright wisps differ in detail and the cirrus is slightly softer. |
+
+The PSNR of each is above 34 dB; each fails only on SSIM under 0.93. My reading: what is left is (1) the ripple in the limb haze of the flight-in frames, which I first noted at uhd 9480 in the D3D11 report and which outlived the cure, and (2) a softer cirrus and a slightly different fine deck texture in the close views, which is the kind of difference the Sun frames show and which the Builder may judge the same way. That judgement is not mine to make on this machine (W5).
+
+Pictures: `9365ac1-d3d11-*.jpg` in `handoff/reports/windows-rtx5080/`; the full report: `9365ac1-REPORT.md` and `9365ac1-report.json`.
+
+### The full text under "Verdict"
+
+```
+LOOK. Nothing forbids the run, but a person reads these first:
+- draw test master: frame 9720 (Neptune, surface view, film frame 4860) differs from the approved picture more than an encode explains: PSNR 34.68 dB, SSIM 0.9209. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\master-009720.jpg.
+- draw test master: frame 9480 (Neptune, flight in (heavy frame), film frame 4740) differs from the approved picture more than an encode explains: PSNR 34.61 dB, SSIM 0.8948. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\master-009480.jpg.
+- draw test master: frame 9916 (Neptune, flight out (heavy frame), film frame 4958) differs from the approved picture more than an encode explains: PSNR 34.62 dB, SSIM 0.8977. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\master-009916.jpg.
+- draw test uhd: frame 9916 (Neptune, flight out (heavy frame), film frame 4958) differs from the approved picture more than an encode explains: PSNR 35.15 dB, SSIM 0.9137. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\uhd-009916.jpg.
+- draw test uhd: frame 9480 (Neptune, flight in (heavy frame), film frame 4740) differs from the approved picture more than an encode explains: PSNR 35.33 dB, SSIM 0.9091. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\uhd-009480.jpg.
+
+VERDICT: LOOK
+```
+
 ## Summary
 
 - **The 4K 60 fps render was not started.** The capture check on the RTX 5080 ended with `VERDICT: LOOK`, and on inspection **Neptune is drawn wrong in every view** (whole, surface, flight in, flight out). All other bodies tested match the approved film.
